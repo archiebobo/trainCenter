@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xmlns:p="http://www.springframework.org/schema/p"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
+	
+	<bean id="contextHelper" class="com.ektong.core.common.ContextHelper" scope="singleton">
+		<description>上下文工具对象</description>
+	</bean>
+			<!-- 应用过滤器配置 -->
+	<bean id="appFilterConfig" class="com.ektong.basic.system.filter.AppFilterConfig" scope="singleton">
+		<property name="noneedLoginFilterConfig">
+			<description>无需登录过滤的URI配置</description>
+			<list value-type="java.lang.String">
+				<value>loginPage.action</value>
+				<value>login.action</value>
+				<value>logout.action</value>
+				<value>style/</value>
+				<value>css/</value>
+				<value>images/</value>
+				<value>subMenu/</value>
+				<value>fckeditor/</value>
+				<value>js/</value>
+				<value>public/verifyCodeImage</value>
+				<value>admin/public/error.jsp</value>
+			</list>
+		</property>
+		<property name="noneedAuthFilterConfig">
+			<description>无需权限过滤的URI配置</description>
+			<list value-type="java.lang.String">
+				<value>loginPage.action</value>
+				<value>login.action</value>
+				<value>logout.action</value>
+				<value>style/</value>
+				<value>css/</value>
+				<value>images/</value>
+				<value>subMenu/</value>
+				<value>fckeditor/</value>
+				<value>js/</value>
+				<value>public/verifyCodeImage</value>
+				<value>admin/public/error.jsp</value>
+			</list>
+		</property>
+	</bean>
+</beans>

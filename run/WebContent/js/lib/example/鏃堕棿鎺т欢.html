@@ -1,0 +1,36 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<script type="text/javascript" src="../My97DatePicker/WdatePicker.js"></script>
+<title>时间控件</title>
+</head>
+
+<body>
+<p>1、引入JS</p>
+<p>&lt;script type=&quot;text/javascript&quot; src=&quot;My97DatePicker/WdatePicker.js&quot;&gt;&lt;/script&gt;</p>
+<p>2、文本框上写上onfocus事件</p>
+<p>onfocus=&quot;WdatePicker({dateFmt:'yyyy-MM-dd'})&quot; </p>
+<p>例：&lt;input name=&quot;time1&quot; type=&quot;text&quot; id=&quot;textfield3&quot; onfocus=&quot;WdatePicker({dateFmt:'yyyy-MM-dd'})&quot; class=&quot;timetextbox&quot; /&gt;</p>
+<p>
+  <input name="time1" type="text" id="textfield3" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd'})" class="timetextbox" />
+</p>
+<p>例：&lt;input name=&quot;time1&quot; type=&quot;text&quot; id=&quot;textfield3&quot; onfocus=&quot;WdatePicker({dateFmt:'yyyy-MM-dd hh:mm:ss'})&quot; class=&quot;timetextbox&quot; /&gt;</p>
+<p>
+  <input name="textfield" type="text" id="textfield" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss'})" class="timetextbox" />
+</p>
+<input id="d4311" class="Wdate" type="text" onFocus="WdatePicker({maxDate:'#F{$dp.$D(\'d4312\')||\'2020-10-01\'}'})"/> 
+<input id="d4312" class="Wdate" type="text" onFocus="WdatePicker({minDate:'#F{$dp.$D(\'d4311\')}',maxDate:'2020-10-01'})"/>
+<p>&lt;input id=&quot;d4311&quot; class=&quot;Wdate&quot; type=&quot;text&quot; onFocus=&quot;WdatePicker({maxDate:'#F{$dp.$D(\'d4312\')||\'2020-10-01\'}'})&quot;/&gt; <br />
+&lt;input id=&quot;d4312&quot; class=&quot;Wdate&quot; type=&quot;text&quot; onFocus=&quot;WdatePicker({minDate:'#F{$dp.$D(\'d4311\')}',maxDate:'2020-10-01'})&quot;/&gt;<br />
+<br />
+注意:<br />
+两个日期的日期格式必须相同<br />
+<br />
+$dp.$ 相当于 document.getElementById 函数.<br />
+那么为什么里面的 ' 使用 \' 呢? 那是因为 &quot; 和 ' 都被外围的函数使用了,故使用转义符 \ ,否则会提示JS语法错误.<br />
+所以您在其他地方使用时注意把 \' 改成 &quot; 或者 ' 来使用.<br />
+<br />
+#F{$dp.$D(\'d4312\')||\'2020-10-01\'}    表示当 d4312 为空时, 采用 2020-10-01 的值作为最大值</p>
+</body>
+</html>

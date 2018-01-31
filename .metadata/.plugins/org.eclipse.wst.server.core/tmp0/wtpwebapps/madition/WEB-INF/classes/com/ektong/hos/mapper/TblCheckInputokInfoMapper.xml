@@ -1,0 +1,235 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- null -->
+<mapper namespace="com.ektong.hos.mapper.TblCheckInputokInfoMapper">
+
+
+<select id="findExportMemo" parameterType="TblCheckInputokInfo" resultType="TblCheckInputokInfo">
+		select a.custid,b.inputid,b.projid,b.memo,c.projname,c.seqno,c.fprojid,d.projname as fprojname,d.seqno as fseqno 
+		from tbl_check_inputok_info a,tbl_check_inputok_dtl b,tbl_check_proj c,tbl_check_proj d
+		where a.inputid = b.inputid and b.projid = c.projid and c.fprojid = d.projid
+		and a.custid = #{custid}
+		order by fseqno
+	</select>
+	
+<!-- 导出体检项目 -->
+	<select id="findExportMemoList" parameterType="TblCheckInputokInfo" resultType="TblCheckInputokInfo">
+		select TAB.projid,TRB.projname,TAB.memo,TCB.CUSTID,TCB.BATCHNO
+		from tbl_check_inputok_dtl TAB,tbl_check_proj TRB,tbl_check_inputok_info TCB,tbl_check_customer TDB
+		where TAB.projid = TRB.projid
+		AND TAB.INPUTID = TCB.INPUTID
+		AND TCB.CUSTID = TDB.CUSTID
+		and TCB.CUSTID = #{custid}
+		and TAB.projid = #{projid}
+	</select>
+	
+<!-- 导出父体检项目 -->
+	<select id="findprojListNew" parameterType="TblCheckInputokInfo" resultType="TblCheckInputokInfo">
+		select TCB.PROJID,TCB.PROJNAME,TCB.FPROJID,TCB.SEQNO,TDB.PROJNAME AS fprojname,TDB.SEQNO AS FSEQNO from tbl_check_proj TCB,tbl_check_proj TDB where  TCB.fprojid = TDB.projid
+	</select>
+	
+<!-- 导出父体检项目 -->
+	<select id="findprojList" parameterType="TblCheckInputokInfo" resultType="TblCheckInputokInfo">
+		select TAB.CUSTID,TAB.BATCHNO,TRB.PROJID,TRB.MEMO,TCB.PROJNAME,TCB.FPROJID,TCB.SEQNO,TDB.PROJNAME AS fprojname,TDB.SEQNO AS FSEQNO
+		from tbl_check_inputok_info TAB,tbl_check_inputok_dtl TRB,tbl_check_proj TCB,tbl_check_proj TDB,tbl_check_customer TEB
+		WHERE TAB.INPUTID = TRB.INPUTID
+		AND TRB.PROJID = TCB.PROJID
+		AND TCB.fprojid = TDB.projid
+		AND TAB.CUSTID = TEB.CUSTID
+		<if test="batchno!=null and batchno!='' ">AND TAB.BATCHNO = #{batchno}</if>
+		<if test="stuempno!=null and stuempno!='' ">AND  TEB.STUEMPNO = #{stuempno}</if>
+		 <if test="unit!=null and unit!='' ">AND TEB.UNIT = #{unit}</if>
+		 <if test="custname!=null and custname!='' ">AND TEB.CUSTNAME = #{custname}</if>
+		ORDER BY TAB.CUSTID,fprojname 
+	</select>
+	<select id="findmemoList" parameterType="TblCheckInputokInfo" resultType="TblCheckInputokInfo">
+		select TAB.projid,TRB.projname,TAB.memo,TCB.CUSTID,TCB.BATCHNO
+		from tbl_check_inputok_dtl TAB,tbl_check_proj TRB,tbl_check_inputok_info TCB,tbl_check_customer TDB
+		where TAB.projid = TRB.projid
+		AND TAB.INPUTID = TCB.INPUTID
+		AND TCB.CUSTID = TDB.CUSTID
+		 <if test="stuempno!=null and stuempno!='' ">AND  TDB.STUEMPNO = #{stuempno}</if>
+		 <if test="batchno!=null and batchno!='' ">AND TCB.BATCHNO = #{batchno}</if>
+		 <if test="unit!=null and unit!='' ">AND TDB.UNIT = #{unit}</if>
+		 <if test="custname!=null and custname!='' ">AND TDB.CUSTNAME = #{custname}</if>
+		 ORDER BY TCB.CUSTID DESC	
+	</select>
+	
+<!-- 按inputid查询 -->
+	<select id="findMemo" parameterType="TblCheckInputokInfo" resultType="TblCheckInputokInfo">
+		select TAB.inputid,TRB.projname,TAB.memo from tbl_check_inputok_dtl TAB,tbl_check_proj TRB where TAB.projid = TRB.projid
+		 <if test="inputid!=null and inputid!='' ">AND TAB.INPUTID = #{inputid}</if>
+	</select>
+
+<!-- 按ID查询一条 -->
+	<select id="findByid" parameterType="int" resultType="TblCheckInputokInfo">
+		SELECT TAB.INPUTID,TAB.CUSTID,TAB.BATCHNO,TAB.OPERID1,TAB.CRTDATE1,TAB.CRTTIME1,TAB.OPERID2,TAB.CRTDATE2,TAB.CRTTIME2,TAB.CHK1OR2,TAB.CHKOPERID,TAB.CHKDATE,TAB.CHKTIME,TAB.DOCTORMEMO,TAB.REMARK
+				FROM TBL_CHECK_INPUTOK_INFO TAB WHERE TAB.CUSTID = #{custid} AND TAB.BATCHNO = #{batchno}
+	</select>
+	<!-- 添加 -->
+	<insert id="insert" parameterType="TblCheckInputokInfo">
+		INSERT INTO TBL_CHECK_INPUTOK_INFO(CUSTID,BATCHNO,OPERID1,CRTDATE1,CRTTIME1,OPERID2,CRTDATE2,CRTTIME2,CHK1OR2,CHKOPERID,CHKDATE,CHKTIME,DOCTORMEMO,REMARK)
+				VALUES(#{custid},#{batchno},#{operid1},#{crtdate1},#{crttime1},#{operid2},#{crtdate2},#{crttime2},#{chk1or2},#{chkoperid},#{chkdate},#{chktime},#{doctormemo},#{remark})
+	</insert>
+
+	<!-- 按条件查询多条（不分页） -->
+	<select id="findByEntity" parameterType="TblCheckInputokInfo" resultType="TblCheckInputokInfo">
+		SELECT TAB.INPUTID,TAB.CUSTID,TAB.BATCHNO,TAB.OPERID1,TAB.CRTDATE1,TAB.CRTTIME1,TAB.OPERID2,TAB.CRTDATE2,TAB.CRTTIME2,TAB.CHK1OR2,TAB.CHKOPERID,TAB.CHKDATE,TAB.CHKTIME,TAB.DOCTORMEMO,TAB.REMARK
+			FROM TBL_CHECK_INPUTOK_INFO TAB,tbl_check_batchset TCB,tbl_check_customer TDB,tbl_oper TEB
+			WHERE TAB.CUSTID = TDB.CUSTID
+			AND TAB.BATCHNO = TCB.BATCHNO
+			AND TAB.CHKOPERID = TEB.OPERID
+				<if test="inputid!=null and inputid!='' ">AND TAB.INPUTID = #{inputid}</if>
+				<if test="custid!=null and custid!='' ">AND TAB.CUSTID = #{custid}</if>
+				<if test="batchno!=null and batchno!='' ">AND TAB.BATCHNO = #{batchno}</if>
+				<if test="operid1!=null and operid1!='' ">AND TAB.OPERID1 = #{operid1}</if>
+				<if test="crtdate1!=null and crtdate1!='' ">AND TAB.CRTDATE1 = #{crtdate1}</if>
+				<if test="crttime1!=null and crttime1!='' ">AND TAB.CRTTIME1 = #{crttime1}</if>
+				<if test="operid2!=null and operid2!='' ">AND TAB.OPERID2 = #{operid2}</if>
+				<if test="crtdate2!=null and crtdate2!='' ">AND TAB.CRTDATE2 = #{crtdate2}</if>
+				<if test="crttime2!=null and crttime2!='' ">AND TAB.CRTTIME2 = #{crttime2}</if>
+				<if test="chk1or2!=null and chk1or2!='' ">AND TAB.CHK1OR2 = #{chk1or2}</if>
+				<if test="chkoperid!=null and chkoperid!='' ">AND TAB.CHKOPERID = #{chkoperid}</if>
+				<if test="chkdate!=null and chkdate!='' ">AND TAB.CHKDATE = #{chkdate}</if>
+				<if test="chktime!=null and chktime!='' ">AND TAB.CHKTIME = #{chktime}</if>
+				<if test="doctormemo!=null and doctormemo!='' ">AND TAB.DOCTORMEMO = #{doctormemo}</if>
+				<if test="remark!=null and remark!='' ">AND TAB.REMARK = #{remark}</if>
+				<if test="stuempno!=null and stuempno!='' ">AND TDB.STUEMPNO = #{stuempno}</if>
+				<if test="unit!=null and unit!='' ">AND TDB.UNIT = #{unit}</if>
+				<if test="custname!=null and custname!='' ">AND TDB.CUSTNAME = #{custname}</if>
+		ORDER BY TDB.UNIT
+	</select>
+
+	<!-- 按ID查询一条 -->
+	<select id="findById" parameterType="int" resultType="TblCheckInputokInfo">
+		SELECT TAB.INPUTID,TAB.CUSTID,TAB.BATCHNO,TAB.OPERID1,TAB.CRTDATE1,TAB.CRTTIME1,TAB.OPERID2,TAB.CRTDATE2,TAB.CRTTIME2,TAB.CHK1OR2,TAB.CHKOPERID,TAB.CHKDATE,TAB.CHKTIME,TAB.DOCTORMEMO,TAB.REMARK
+				FROM TBL_CHECK_INPUTOK_INFO TAB WHERE TAB.INPUTID = #{inputid}
+	</select>
+
+	<!-- 按ID删除一条 -->
+	<delete id="delete" parameterType="int">
+		DELETE FROM TBL_CHECK_INPUTOK_INFO TAB WHERE TAB.INPUTID = #{inputid}
+	</delete>
+
+	<!-- 按ID修改 -->
+	<update id="update" parameterType="TblCheckInputokInfo">
+		UPDATE TAB
+		<set>
+			<if test="custid!=null and custid!='' ">TAB.CUSTID = #{custid},</if>
+			<if test="batchno!=null and batchno!='' ">TAB.BATCHNO = #{batchno},</if>
+			<if test="operid1!=null and operid1!='' ">TAB.OPERID1 = #{operid1},</if>
+			<if test="crtdate1!=null and crtdate1!='' ">TAB.CRTDATE1 = #{crtdate1},</if>
+			<if test="crttime1!=null and crttime1!='' ">TAB.CRTTIME1 = #{crttime1},</if>
+			<if test="operid2!=null and operid2!='' ">TAB.OPERID2 = #{operid2},</if>
+			<if test="crtdate2!=null and crtdate2!='' ">TAB.CRTDATE2 = #{crtdate2},</if>
+			<if test="crttime2!=null and crttime2!='' ">TAB.CRTTIME2 = #{crttime2},</if>
+			<if test="chk1or2!=null and chk1or2!='' ">TAB.CHK1OR2 = #{chk1or2},</if>
+			<if test="chkoperid!=null and chkoperid!='' ">TAB.CHKOPERID = #{chkoperid},</if>
+			<if test="chkdate!=null and chkdate!='' ">TAB.CHKDATE = #{chkdate},</if>
+			<if test="chktime!=null and chktime!='' ">TAB.CHKTIME = #{chktime},</if>
+			<if test="doctormemo!=null and doctormemo!='' ">TAB.DOCTORMEMO = #{doctormemo},</if>
+			<if test="remark!=null and remark!='' ">TAB.REMARK = #{remark},</if>
+		</set>
+		from TBL_CHECK_INPUTOK_INFO TAB WHERE TAB.INPUTID = #{inputid}
+	</update>
+
+	<select id="findAll" parameterType="TblCheckInputokInfo" resultType="TblCheckInputokInfo">
+		SELECT TAB.INPUTID,TDB.CUSTNAME,TDB.UNIT,TDB.STUEMPNO,TCB.BATCHNAME,TEB.NAME,TAB.CRTDATE1,TAB.CRTTIME1,TAB.OPERID2,TAB.CRTDATE2,TAB.CRTTIME2,TAB.CHK1OR2,TAB.CHKOPERID,TAB.CHKDATE,TAB.CHKTIME,TAB.DOCTORMEMO,TAB.REMARK
+			FROM TBL_CHECK_INPUTOK_INFO TAB,tbl_check_batchset TCB,tbl_check_customer TDB,tbl_oper TEB
+			WHERE TAB.CUSTID = TDB.CUSTID
+			AND TAB.BATCHNO = TCB.BATCHNO
+			AND TAB.CHKOPERID = TEB.OPERID
+			<if test="inputid!=null and inputid!='' ">AND TAB.INPUTID = #{inputid}</if>
+				<if test="custid!=null and custid!='' ">AND TAB.CUSTID = #{custid}</if>
+				<if test="batchno!=null and batchno!='' ">AND TAB.BATCHNO = #{batchno}</if>
+				<if test="operid1!=null and operid1!='' ">AND TAB.OPERID1 = #{operid1}</if>
+				<if test="crtdate1!=null and crtdate1!='' ">AND TAB.CRTDATE1 = #{crtdate1}</if>
+				<if test="crttime1!=null and crttime1!='' ">AND TAB.CRTTIME1 = #{crttime1}</if>
+				<if test="operid2!=null and operid2!='' ">AND TAB.OPERID2 = #{operid2}</if>
+				<if test="crtdate2!=null and crtdate2!='' ">AND TAB.CRTDATE2 = #{crtdate2}</if>
+				<if test="crttime2!=null and crttime2!='' ">AND TAB.CRTTIME2 = #{crttime2}</if>
+				<if test="chk1or2!=null and chk1or2!='' ">AND TAB.CHK1OR2 = #{chk1or2}</if>
+				<if test="chkoperid!=null and chkoperid!='' ">AND TAB.CHKOPERID = #{chkoperid}</if>
+				<if test="chkdate!=null and chkdate!='' ">AND TAB.CHKDATE = #{chkdate}</if>
+				<if test="chktime!=null and chktime!='' ">AND TAB.CHKTIME = #{chktime}</if>
+				<if test="doctormemo!=null and doctormemo!='' ">AND TAB.DOCTORMEMO = #{doctormemo}</if>
+				<if test="remark!=null and remark!='' ">AND TAB.REMARK = #{remark}</if>
+				<if test="stuempno!=null and stuempno!='' ">AND TDB.STUEMPNO = #{stuempno}</if>
+				<if test="unit!=null and unit!='' ">AND TDB.UNIT = #{unit}</if>
+				<if test="custname!=null and custname!='' ">AND TDB.CUSTNAME = #{custname}</if>
+			ORDER BY TAB.INPUTID ASC
+	</select>
+
+	<!-- 按条件查询多条（分页） -->
+	<select id="findByEntityOnPage" parameterType="TblCheckInputokInfo" resultType="TblCheckInputokInfo">
+	
+<!-- 	SELECT TOP #{pageNo} * #{pageSize} * FROM tbl_check_inputok_info 
+	WHERE inputid NOT IN(SELECT TOP (#{pageNo}-1) * #{pageSize} inputid FROM tbl_check_inputok_info ORDER BY inputid ASC)
+	<if test="inputid!=null and inputid!='' ">AND TAB.INPUTID = #{inputid}</if>
+				<if test="custid!=null and custid!='' ">AND TAB.CUSTID = #{custid}</if>
+				<if test="batchno!=null and batchno!='' ">AND TAB.BATCHNO = #{batchno}</if>
+				<if test="operid1!=null and operid1!='' ">AND TAB.OPERID1 = #{operid1}</if>
+				<if test="crtdate1!=null and crtdate1!='' ">AND TAB.CRTDATE1 = #{crtdate1}</if>
+				<if test="crttime1!=null and crttime1!='' ">AND TAB.CRTTIME1 = #{crttime1}</if>
+				<if test="operid2!=null and operid2!='' ">AND TAB.OPERID2 = #{operid2}</if>
+				<if test="crtdate2!=null and crtdate2!='' ">AND TAB.CRTDATE2 = #{crtdate2}</if>
+				<if test="crttime2!=null and crttime2!='' ">AND TAB.CRTTIME2 = #{crttime2}</if>
+				<if test="chk1or2!=null and chk1or2!='' ">AND TAB.CHK1OR2 = #{chk1or2}</if>
+				<if test="chkoperid!=null and chkoperid!='' ">AND TAB.CHKOPERID = #{chkoperid}</if>
+				<if test="chkdate!=null and chkdate!='' ">AND TAB.CHKDATE = #{chkdate}</if>
+				<if test="chktime!=null and chktime!='' ">AND TAB.CHKTIME = #{chktime}</if>
+				<if test="doctormemo!=null and doctormemo!='' ">AND TAB.DOCTORMEMO = #{doctormemo}</if>
+				<if test="remark!=null and remark!='' ">AND TAB.REMARK = #{remark}</if>
+	ORDER BY inputid ASC -->
+	
+	
+		SELECT TAB.INPUTID,TDB.CUSTNAME,TCB.BATCHNAME,TEB.NAME,TAB.CRTDATE1,TAB.CRTTIME1,TAB.OPERID2,TAB.CRTDATE2,TAB.CRTTIME2,TAB.CHK1OR2,TAB.CHKOPERID,TAB.CHKDATE,TAB.CHKTIME,TAB.DOCTORMEMO,TAB.REMARK
+			FROM TBL_CHECK_INPUTOK_INFO TAB,tbl_check_batchset TCB,tbl_check_customer TDB,tbl_oper TEB
+			WHERE TAB.CUSTID = TDB.CUSTID
+			AND TAB.BATCHNO = TCB.BATCHNO
+			AND TAB.CHKOPERID = TEB.OPERID
+			and tab.inputid <![CDATA[>]]> (#{pageNo}-1) * #{pageSize} and tab.inputid <![CDATA[<=]]> #{pageNo} * #{pageSize}
+				<if test="inputid!=null and inputid!='' ">AND TAB.INPUTID = #{inputid}</if>
+				<if test="custid!=null and custid!='' ">AND TAB.CUSTID = #{custid}</if>
+				<if test="batchno!=null and batchno!='' ">AND TAB.BATCHNO = #{batchno}</if>
+				<if test="operid1!=null and operid1!='' ">AND TAB.OPERID1 = #{operid1}</if>
+				<if test="crtdate1!=null and crtdate1!='' ">AND TAB.CRTDATE1 = #{crtdate1}</if>
+				<if test="crttime1!=null and crttime1!='' ">AND TAB.CRTTIME1 = #{crttime1}</if>
+				<if test="operid2!=null and operid2!='' ">AND TAB.OPERID2 = #{operid2}</if>
+				<if test="crtdate2!=null and crtdate2!='' ">AND TAB.CRTDATE2 = #{crtdate2}</if>
+				<if test="crttime2!=null and crttime2!='' ">AND TAB.CRTTIME2 = #{crttime2}</if>
+				<if test="chk1or2!=null and chk1or2!='' ">AND TAB.CHK1OR2 = #{chk1or2}</if>
+				<if test="chkoperid!=null and chkoperid!='' ">AND TAB.CHKOPERID = #{chkoperid}</if>
+				<if test="chkdate!=null and chkdate!='' ">AND TAB.CHKDATE = #{chkdate}</if>
+				<if test="chktime!=null and chktime!='' ">AND TAB.CHKTIME = #{chktime}</if>
+				<if test="doctormemo!=null and doctormemo!='' ">AND TAB.DOCTORMEMO = #{doctormemo}</if>
+				<if test="remark!=null and remark!='' ">AND TAB.REMARK = #{remark}</if>
+				<if test="stuempno!=null and stuempno!='' ">AND TAB.CUSTID = (select custid from tbl_check_customer where stuempno = #{stuempno})</if>
+	</select>
+
+	<!-- 按条件查询总数（用于分页） -->
+	<select id="findByEntityOnPageCount" parameterType="TblCheckInputokInfo" resultType="int">
+		SELECT COUNT(1) 
+			FROM TBL_CHECK_INPUTOK_INFO TAB
+			<where>
+				<if test="inputid!=null and inputid!='' ">AND TAB.INPUTID = #{inputid}</if>
+				<if test="custid!=null and custid!='' ">AND TAB.CUSTID = #{custid}</if>
+				<if test="batchno!=null and batchno!='' ">AND TAB.BATCHNO = #{batchno}</if>
+				<if test="operid1!=null and operid1!='' ">AND TAB.OPERID1 = #{operid1}</if>
+				<if test="crtdate1!=null and crtdate1!='' ">AND TAB.CRTDATE1 = #{crtdate1}</if>
+				<if test="crttime1!=null and crttime1!='' ">AND TAB.CRTTIME1 = #{crttime1}</if>
+				<if test="operid2!=null and operid2!='' ">AND TAB.OPERID2 = #{operid2}</if>
+				<if test="crtdate2!=null and crtdate2!='' ">AND TAB.CRTDATE2 = #{crtdate2}</if>
+				<if test="crttime2!=null and crttime2!='' ">AND TAB.CRTTIME2 = #{crttime2}</if>
+				<if test="chk1or2!=null and chk1or2!='' ">AND TAB.CHK1OR2 = #{chk1or2}</if>
+				<if test="chkoperid!=null and chkoperid!='' ">AND TAB.CHKOPERID = #{chkoperid}</if>
+				<if test="chkdate!=null and chkdate!='' ">AND TAB.CHKDATE = #{chkdate}</if>
+				<if test="chktime!=null and chktime!='' ">AND TAB.CHKTIME = #{chktime}</if>
+				<if test="doctormemo!=null and doctormemo!='' ">AND TAB.DOCTORMEMO = #{doctormemo}</if>
+				<if test="remark!=null and remark!='' ">AND TAB.REMARK = #{remark}</if>
+				<if test="stuempno!=null and stuempno!='' ">AND TAB.CUSTID = (select custid from tbl_check_customer where stuempno = #{stuempno})</if>
+	
+			</where>
+	</select>
+
+</mapper>

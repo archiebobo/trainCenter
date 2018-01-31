@@ -1,0 +1,32 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<script type="text/javascript" src="../check/check.js"></script>
+<script type="text/javascript" src="../jquery/jquery-1.7.min.js"></script>
+<title>公共JS验证</title>
+</head>
+
+
+<body>
+	  <form name="formtest" method="post" action="#">
+	  <table>
+	  <tr>
+    		<td>电脑类型:<select id="stype" name="stype" isnull="true">
+    			<option value="">未选择</option>
+    			<option value="1" selected>台机</option>
+    			<option value="2">笔记本</option>
+    		</select></td>
+    		<td>单选按钮:男<input type="radio" name="sex" isnull="true" checked="checked" value="1"/>女<input type="radio" name="sex" isnull="true" value="0"/>
+    		<td>复选框：<input name="hobby" type="checkbox" value="1" checked="checked" isnull="true"/>篮球<input name="hobby" type="checkbox" value="2" isnull="true"/>足球<input name="hobby" type="checkbox" value="3" isnull="true"/>乒乓球</td>
+    		<td>文本域：<textarea name="introduct" cols="5" rows="5" isnull="true">ssss</textarea></td>
+    		<td>正整数：<input type="text" name="number" isnull="true" checktype="email" />
+    		<td>提示信息：<div id="msgdiv"></div></td>
+    	</tr>
+    	<tr>
+    		<td><input type="button" name="button4" id="button4" value="测试" onclick="attrCheckByFormName('formtest','all','msgdiv')" class="btnStyle78PX"/></td>
+    	</tr>
+    	</table>
+    	</form>
+</body>
+</html> 

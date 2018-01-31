@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- null -->
+<mapper namespace="com.ektong.hos.mapper.TblCheckProjMapper">
+
+
+<!-- 按name查询一条 -->
+	<select id="findByName" parameterType="String" resultType="TblCheckProj">
+	SELECT TAB.PROJID,TAB.PROJNAME,TAB.STATUS,TAB.PROJTYPE,TAB.FPROJID,TAB.UNIT,TAB.MEMO,TAB.REMARK,TAB.SEQNO
+			FROM TBL_CHECK_PROJ TAB where TAB.PROJNAME = #{projeckname}
+	</select>
+	
+	<!-- 添加 -->
+	<insert id="insert" parameterType="TblCheckProj">
+		INSERT INTO TBL_CHECK_PROJ(PROJNAME,STATUS,PROJTYPE,FPROJID,UNIT,MEMO,SEQNO,REMARK)
+				VALUES(#{projname},#{status},#{projtype},#{fprojid},#{unit},#{memo},#{seqno},#{remark})
+	</insert>
+
+	<!-- 按条件查询多条（不分页） -->
+	<select id="findByEntity" parameterType="TblCheckProj" resultType="TblCheckProj">
+		SELECT TAB.PROJID,TAB.PROJNAME,TAB.STATUS,TAB.PROJTYPE,TAB.FPROJID,TAB.UNIT,TAB.MEMO,TAB.REMARK,TAB.SEQNO
+			FROM TBL_CHECK_PROJ TAB
+			<where>
+				<if test="projid!=null and projid!='' ">AND TAB.PROJID = #{projid}</if>
+				<if test="projname!=null and projname!='' ">AND TAB.PROJNAME = #{projname}</if>
+				<if test="status!=null and status!='' ">AND TAB.STATUS = #{status}</if>
+				<if test="projtype!=null and projtype!='' ">AND TAB.PROJTYPE = #{projtype}</if>
+				<if test="fprojid!=null and fprojid!='' ">AND TAB.FPROJID = #{fprojid}</if>
+				<if test="unit!=null and unit!='' ">AND TAB.UNIT = #{unit}</if>
+				<if test="memo!=null and memo!='' ">AND TAB.MEMO = #{memo}</if>
+				<if test="remark!=null and remark!='' ">AND TAB.REMARK = #{remark}</if>
+				AND TAB.STATUS = 1
+			</where>
+		ORDER BY TAB.PROJID DESC
+	</select>
+
+	<!-- 按ID查询一条 -->
+	<select id="findById" parameterType="int" resultType="TblCheckProj">
+	SELECT t1.PROJID,t1.PROJNAME,t1.STATUS,t1.PROJTYPE,t1.FPROJID,t1.UNIT,t1.MEMO,t1.REMARK,t1.SEQNO,t2.FPROJNAME from (SELECT TAB.PROJID,TAB.PROJNAME,TAB.STATUS,TAB.PROJTYPE,TAB.FPROJID,TAB.UNIT,TAB.MEMO,TAB.REMARK,TAB.SEQNO
+				FROM TBL_CHECK_PROJ TAB WHERE TAB.PROJID = #{projid} ) t1 left join (select PROJID as FPROJID,PROJNAME as FPROJNAME from TBL_CHECK_PROJ where PROJID = (select FPROJID from TBL_CHECK_PROJ where PROJID = #{projid})) t2 on t1.FPROJID =t2.FPROJID
+		
+	</select>
+
+	<!-- 按ID删除一条 -->
+	<delete id="delete" parameterType="int">
+		DELETE FROM TBL_CHECK_PROJ TAB WHERE TAB.PROJID = #{projid}
+	</delete>
+
+	<!-- 按ID修改 -->
+	<update id="update" parameterType="TblCheckProj">
+		UPDATE TAB
+		<set>
+			<if test="projname!=null and projname!='' ">TAB.PROJNAME = #{projname},</if>
+			<if test="status!=null and status!='' ">TAB.STATUS = #{status},</if>
+			<if test="projtype!=null and projtype!='' ">TAB.PROJTYPE = #{projtype},</if>
+			<if test="fprojid!=null and fprojid!='' ">TAB.FPROJID = #{fprojid},</if>
+			<if test="unit!=null and unit!='' ">TAB.UNIT = #{unit},</if>
+			<if test="memo!=null and memo!='' ">TAB.MEMO = #{memo},</if>
+			<if test="seqno!=null and seqno!='' ">TAB.SEQNO = #{seqno},</if>
+			<if test="remark!=null and remark!='' ">TAB.REMARK = #{remark},</if>
+		</set>
+		FROM TBL_CHECK_PROJ TAB WHERE TAB.PROJID = #{projid}
+	</update>
+
+	<!-- 按条件查询多条（分页） -->
+	<select id="findByEntityOnPage" parameterType="TblCheckProj" resultType="TblCheckProj">
+	<![CDATA[
+	SELECT T.* FROM( SELECT TAB.*,ROWNUM AS RN FROM(
+	]]>
+		SELECT TAB.PROJID,TAB.PROJNAME,TAB.STATUS,TAB.PROJTYPE,TAB.FPROJID,TAB.UNIT,TAB.MEMO,TAB.REMARK
+			FROM TBL_CHECK_PROJ TAB
+			<where>
+				<if test="projid!=null and projid!='' ">AND TAB.PROJID = #{projid}</if>
+				<if test="projname!=null and projname!='' ">AND TAB.PROJNAME = #{projname}</if>
+				<if test="status!=null and status!='' ">AND TAB.STATUS = #{status}</if>
+				<if test="projtype!=null and projtype!='' ">AND TAB.PROJTYPE = #{projtype}</if>
+				<if test="fprojid!=null and fprojid!='' ">AND TAB.FPROJID = #{fprojid}</if>
+				<if test="unit!=null and unit!='' ">AND TAB.UNIT = #{unit}</if>
+				<if test="memo!=null and memo!='' ">AND TAB.MEMO = #{memo}</if>
+				<if test="remark!=null and remark!='' ">AND TAB.REMARK = #{remark}</if>
+			</where>
+		ORDER BY TAB.PROJID DESC
+	<![CDATA[
+	) TAB WHERE ROWNUM <= #{pageNo} * #{pageSize}) T WHERE RN > (#{pageNo}-1) * #{pageSize}
+	]]>
+	</select>
+
+	<!-- 按条件查询总数（用于分页） -->
+	<select id="findByEntityOnPageCount" parameterType="TblCheckProj" resultType="int">
+		SELECT COUNT(1) 
+			FROM TBL_CHECK_PROJ TAB
+			<where>
+				<if test="projid!=null and projid!='' ">AND TAB.PROJID = #{projid}</if>
+				<if test="projname!=null and projname!='' ">AND TAB.PROJNAME = #{projname}</if>
+				<if test="status!=null and status!='' ">AND TAB.STATUS = #{status}</if>
+				<if test="projtype!=null and projtype!='' ">AND TAB.PROJTYPE = #{projtype}</if>
+				<if test="fprojid!=null and fprojid!='' ">AND TAB.FPROJID = #{fprojid}</if>
+				<if test="unit!=null and unit!='' ">AND TAB.UNIT = #{unit}</if>
+				<if test="memo!=null and memo!='' ">AND TAB.MEMO = #{memo}</if>
+				<if test="remark!=null and remark!='' ">AND TAB.REMARK = #{remark}</if>
+			</where>
+	</select>
+
+</mapper>

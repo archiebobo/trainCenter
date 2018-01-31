@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/javaee" xmlns:web="http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" id="WebApp_ID" version="2.5">
+  <display-name>inpay_restaurant</display-name>
+	<welcome-file-list>
+		<welcome-file>orderPage.action</welcome-file>
+	</welcome-file-list>
+  
+  <context-param>
+		<param-name>contextConfigLocation</param-name>
+		<param-value>classpath:applicationContext.xml</param-value>
+	</context-param>
+	<listener>
+		<listener-class>
+			org.springframework.web.context.ContextLoaderListener
+		</listener-class>
+	</listener>
+  	<!-- 防止内存泄露 -->
+	<listener>
+		<listener-class>
+			org.springframework.web.util.IntrospectorCleanupListener
+		</listener-class>
+	</listener>
+	
+  	<filter>
+		<filter-name>struts2</filter-name>
+        <filter-class>org.apache.struts2.dispatcher.FilterDispatcher</filter-class>
+    </filter>
+	<filter-mapping>
+		<filter-name>struts2</filter-name>
+		<url-pattern>*.action</url-pattern>
+	</filter-mapping>
+	<filter-mapping>
+		<filter-name>struts2</filter-name>
+		<url-pattern>*.jsp</url-pattern>
+	</filter-mapping>
+	<filter>
+		<description>登录限制过滤器</description>
+        <filter-name>loginFilter</filter-name>
+        <filter-class>
+            com.ektong.basic.system.filter.LoginFilter
+        </filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>loginFilter</filter-name>
+        <url-pattern>*.jsp</url-pattern>
+    </filter-mapping>
+    <filter-mapping>
+        <filter-name>loginFilter</filter-name>
+        <url-pattern>*.action</url-pattern>
+    </filter-mapping>
+	<!--  
+	<filter>
+		<filter-name>loggerfilter</filter-name>
+		<filter-class>com.ektong.core.common.BusinessLogFilter</filter-class>
+	</filter>
+	<filter-mapping>
+		<filter-name>loggerfilter</filter-name>
+		<url-pattern>*.action</url-pattern>
+	</filter-mapping>
+	-->
+	
+	<filter>
+		<filter-name>encoding</filter-name>
+		<filter-class>com.ektong.core.common.EncodingFilter</filter-class>
+	</filter>
+	<filter-mapping>
+		<filter-name>encoding</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+	<!-- session设置（分钟）-->
+	<session-config>
+		<session-timeout>240</session-timeout>
+	</session-config>
+</web-app>

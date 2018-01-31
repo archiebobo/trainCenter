@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- null -->
+<mapper namespace="com.ektong.hos.mapper.TblCheckBatchsetMapper">
+
+	<!-- 添加 -->
+	<insert id="insert" parameterType="TblCheckBatchset">
+		INSERT INTO TBL_CHECK_BATCHSET(BATCHNAME,STATUS,REMARK)
+				VALUES(#{batchname},#{status},#{remark})
+	</insert>
+
+	<!-- 按条件查询多条（不分页） -->
+	<select id="findByEntity" parameterType="TblCheckBatchset" resultType="TblCheckBatchset">
+		SELECT TAB.BATCHNO,TAB.BATCHNAME,TAB.STATUS,TAB.REMARK
+			FROM TBL_CHECK_BATCHSET TAB
+			<where>
+				<if test="batchno!=null and batchno!='' ">AND TAB.BATCHNO = #{batchno}</if>
+				<if test="batchname!=null and batchname!='' ">AND TAB.BATCHNAME = #{batchname}</if>
+				<if test="status!=null and status!='' ">AND TAB.STATUS = #{status}</if>
+				<if test="remark!=null and remark!='' ">AND TAB.REMARK = #{remark}</if>
+			</where>
+		ORDER BY TAB.BATCHNO DESC
+	</select>
+
+	<!-- 按ID查询一条 -->
+	<select id="findById" parameterType="int" resultType="TblCheckBatchset">
+		SELECT TAB.BATCHNO,TAB.BATCHNAME,TAB.STATUS,TAB.REMARK
+				FROM TBL_CHECK_BATCHSET TAB WHERE TAB.BATCHNO = #{batchno}
+	</select>
+
+	<!-- 按ID删除一条 -->
+	<delete id="delete" parameterType="int">
+		DELETE TAB FROM TBL_CHECK_BATCHSET TAB WHERE TAB.BATCHNO = #{batchno}
+	</delete>
+
+	<!-- 按ID修改 -->
+	<update id="update" parameterType="TblCheckBatchset">
+		UPDATE TAB
+		<set>
+			<if test="batchname!=null and batchname!='' ">TAB.BATCHNAME = #{batchname},</if>
+			<if test="status!=null and status!='' ">TAB.STATUS = #{status},</if>
+			<if test="remark!=null and remark!='' ">TAB.REMARK = #{remark},</if>
+		</set>
+		FROM TBL_CHECK_BATCHSET TAB WHERE TAB.BATCHNO = #{batchno}
+	</update>
+
+	<!-- 按条件查询多条（分页） -->
+	<select id="findByEntityOnPage" parameterType="TblCheckBatchset" resultType="TblCheckBatchset">
+		SELECT TAB.BATCHNO,TAB.BATCHNAME,TAB.STATUS,TAB.REMARK
+			FROM TBL_CHECK_BATCHSET TAB
+			<where>
+				<if test="batchno!=null and batchno!='' ">AND TAB.BATCHNO = #{batchno}</if>
+				<if test="batchname!=null and batchname!='' ">AND TAB.BATCHNAME = #{batchname}</if>
+				<if test="status!=null and status!='' ">AND TAB.STATUS = #{status}</if>
+				<if test="remark!=null and remark!='' ">AND TAB.REMARK = #{remark}</if>
+				AND TAB.BATCHNO between (#{pageNo}-1) * #{pageSize} and  #{pageNo} * #{pageSize}
+			</where>
+		ORDER BY TAB.BATCHNO DESC
+	</select>
+
+	<!-- 按条件查询总数（用于分页） -->
+	<select id="findByEntityOnPageCount" parameterType="TblCheckBatchset" resultType="int">
+		SELECT COUNT(1) 
+			FROM TBL_CHECK_BATCHSET TAB
+			<where>
+				<if test="batchno!=null and batchno!='' ">AND TAB.BATCHNO = #{batchno}</if>
+				<if test="batchname!=null and batchname!='' ">AND TAB.BATCHNAME = #{batchname}</if>
+				<if test="status!=null and status!='' ">AND TAB.STATUS = #{status}</if>
+				<if test="remark!=null and remark!='' ">AND TAB.REMARK = #{remark}</if>
+			</where>
+	</select>
+
+</mapper>

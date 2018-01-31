@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- null -->
+<mapper namespace="com.ektong.hos.mapper.TblMenuMapper">
+
+
+	<!-- 按条件查询多条（不分页） -->
+	<select id="findMenuByRoleid" parameterType="TblMenu" resultType="TblMenu">
+		SELECT TAB.MENUID,TAB.NAME,TAB.FATHERID,TAB.MENU_IDC,TAB.FILLER,TAB.MENUTYPE
+			FROM TBL_MENU TAB where menuid in(select menuid from tbl_role_menu where roleid = (select roleid from tbl_oper where operid = #{operid}))
+		ORDER BY TAB.MENUID DESC
+	</select>
+	
+	<!-- 按角色ID左联查询-->
+	<select id="findMenuByRoleID" parameterType="string" resultType="TblMenu">
+	select tab.* from TBL_MENU tab where menuid in(select menuid from tbl_role_menu where roleid = #{roleID}) 
+	</select>
+	
+	<!-- 添加 -->
+	<insert id="insert" parameterType="TblMenu">
+		<selectKey resultType="int" order="BEFORE" keyProperty="menuid">
+			SELECT TBL_MENU_SEQ.NEXTVAL FROM DUAL
+		</selectKey>
+		INSERT INTO TBL_MENU(MENUID,NAME,FATHERID,MENU_IDC,FILLER)
+				VALUES(#{menuid},#{name},#{fatherid},#{menu_idc},#{filler})
+	</insert>
+
+	<!-- 按条件查询多条（不分页） -->
+	<select id="findByEntity" parameterType="TblMenu" resultType="TblMenu">
+		SELECT TAB.MENUID,TAB.NAME,TAB.FATHERID,TAB.MENU_IDC,TAB.FILLER,TAB.MENUTYPE
+			FROM TBL_MENU TAB
+			<where>
+				<if test="menuid!=null and menuid!='' ">AND TAB.MENUID = #{menuid}</if>
+				<if test="name!=null and name!='' ">AND TAB.NAME = #{name}</if>
+				<if test="fatherid!=null and fatherid!='' ">AND TAB.FATHERID = #{fatherid}</if>
+				<if test="menu_idc!=null and menu_idc!='' ">AND TAB.MENU_IDC = #{menu_idc}</if>
+				<if test="filler!=null and filler!='' ">AND TAB.FILLER = #{filler}</if>
+			</where>
+		ORDER BY TAB.MENUID DESC
+	</select>
+
+	<!-- 按ID查询一条 -->
+	<select id="findById" parameterType="int" resultType="TblMenu">
+		SELECT TAB.MENUID,TAB.NAME,TAB.FATHERID,TAB.MENU_IDC,TAB.FILLER
+				FROM TBL_MENU TAB WHERE TAB.MENUID = #{menuid}
+	</select>
+
+	<!-- 按ID删除一条 -->
+	<delete id="delete" parameterType="int">
+		DELETE FROM TBL_MENU TAB WHERE TAB.MENUID = #{menuid}
+	</delete>
+
+	<!-- 按ID修改 -->
+	<update id="update" parameterType="TblMenu">
+		UPDATE TBL_MENU TAB
+		<set>
+			<if test="name!=null and name!='' ">TAB.NAME = #{name},</if>
+			<if test="fatherid!=null and fatherid!='' ">TAB.FATHERID = #{fatherid},</if>
+			<if test="menu_idc!=null and menu_idc!='' ">TAB.MENU_IDC = #{menu_idc},</if>
+			<if test="filler!=null and filler!='' ">TAB.FILLER = #{filler},</if>
+		</set>
+		WHERE TAB.MENUID = #{menuid}
+	</update>
+
+	<!-- 按条件查询多条（分页） -->
+	<select id="findByEntityOnPage" parameterType="TblMenu" resultType="TblMenu">
+	<![CDATA[
+	SELECT T.* FROM( SELECT TAB.*,ROWNUM AS RN FROM(
+	]]>
+		SELECT TAB.MENUID,TAB.NAME,TAB.FATHERID,TAB.MENU_IDC,TAB.FILLER
+			FROM TBL_MENU TAB
+			<where>
+				<if test="menuid!=null and menuid!='' ">AND TAB.MENUID = #{menuid}</if>
+				<if test="name!=null and name!='' ">AND TAB.NAME = #{name}</if>
+				<if test="fatherid!=null and fatherid!='' ">AND TAB.FATHERID = #{fatherid}</if>
+				<if test="menu_idc!=null and menu_idc!='' ">AND TAB.MENU_IDC = #{menu_idc}</if>
+				<if test="filler!=null and filler!='' ">AND TAB.FILLER = #{filler}</if>
+			</where>
+		ORDER BY TAB.MENUID DESC
+	<![CDATA[
+	) TAB WHERE ROWNUM <= #{pageNo} * #{pageSize}) T WHERE RN > (#{pageNo}-1) * #{pageSize}
+	]]>
+	</select>
+
+	<!-- 按条件查询总数（用于分页） -->
+	<select id="findByEntityOnPageCount" parameterType="TblMenu" resultType="int">
+		SELECT COUNT(1) 
+			FROM TBL_MENU TAB
+			<where>
+				<if test="menuid!=null and menuid!='' ">AND TAB.MENUID = #{menuid}</if>
+				<if test="name!=null and name!='' ">AND TAB.NAME = #{name}</if>
+				<if test="fatherid!=null and fatherid!='' ">AND TAB.FATHERID = #{fatherid}</if>
+				<if test="menu_idc!=null and menu_idc!='' ">AND TAB.MENU_IDC = #{menu_idc}</if>
+				<if test="filler!=null and filler!='' ">AND TAB.FILLER = #{filler}</if>
+			</where>
+	</select>
+
+</mapper>

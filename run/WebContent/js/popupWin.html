@@ -1,0 +1,121 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>弹出窗口</title>
+<link rel="stylesheet" type="text/css" href="./lib/jquery/easyui/themes/blue/popupWindow.css"/>
+<script type="text/javascript" src="./lib/jquery/jquery-1.7.1.min.js"></script>
+
+<script type="text/javascript">
+$(function(){
+	
+});
+
+function openWin(){
+	var c = {
+		url: 'http://localhost:8080/lenovo/admin/bss/sales/sales_billing_add.jsp',
+		title: '弹出窗口',
+		sizeMode: 'custom',
+		width: 500,
+		height: 700
+	};
+	
+	openWindow(c);
+	
+}
+Global = {};
+
+/**
+ * 打开弹出窗口
+ **/
+function openWindow(url_, title_, width_, height_){
+	
+	if(title_ == undefined) title_ = '弹出窗口';
+	var winSetting = {
+		title: title_ || '弹出窗口',
+		url: url_
+	};
+	
+	Global.popupWindow = new PopupWindow(winSetting);
+	Global.popupWindow.show();
+}
+
+/**
+ * 关闭弹出窗口
+ */
+function closeWindow(){
+	Global.popupWindow.destory();
+	Global.popupWindow = null;
+}
+
+function PopupWindow(c){
+	this.url = c.url;
+	this.title = c.title;
+	
+	this.maskWidth = window['innerWidth'] || document.documentElement.clientWidth;
+	this.maskHeight = window['innerHeight'] || document.documentElement.clientHeight;
+	
+	this.height = c.height || (this.maskHeight - 35);
+	this.width = c.width || (this.maskWidth - 12);
+	
+	//this.left = (this.maskWidth - this.width)/2;
+	//this.top = (this.maskHeight - this.height)/2;
+	
+	
+	this.init = function(){
+		var html = '<div id="panelWindow" class="panel window" style="width: ' + (this.width) + 'px; display: none; z-index: 100; position: absolute; left: 0px; top: 0px; ">';
+		html	+= '	<div class="panel-header panel-header-noborder window-header" style="width: ' + this.width + 'px; ">';
+		html	+= '	<div class="panel-title" style="cursor: move; ">' + this.title + '</div>';
+		html	+= '	<div class="panel-tool">';
+		html	+= '		<a class="panel-tool-close" href="javascript:void(0)"></a>';
+		html	+= '	</div>';
+		html	+= '	<div class="panel-body panel-body-noborder window-body" style="width: ' + (this.width-2) + 'px; height: ' + this.height + 'px; ">';
+		html	+= '		<iframe id="innerWin" frameborder="0" width="100%" height="98%" scrolling="auto"  src="' + this.url + '"></iframe>';
+		html	+= '	</div>';
+		html	+= '</div>';
+		html	+= '<div id="windowMask" class="window-mask" style="width: ' + this.maskWidth + 'px; height ' + this.maskHeight + 'px; display: none; z-index: 1; "></div>';
+		
+		$(window.document.body).append(html);
+		$('.panel-tool-close').click(this.close);
+	};
+	
+	this.show = function(){
+		$('#panelWindow').css('display', 'block');
+		//$('#windowMask').css('display', 'block');
+		$('#panelWindow').css('z-index', 9009);
+		$('#windowMask').css('z-index', 9000);
+	};
+	
+	this.close = function(){
+		$('#windowMask').css('display', 'none');
+		$('#panelWindow').css('display', 'none');
+	};
+	
+	this.destory = function(){
+		$('#windowMask').remove();
+		$('#panelWindow').remove();
+	};
+	
+	this.init();
+}
+</script>
+<style type="text/css">
+.popupwin{
+	width: 600px;
+	height: 700px;
+}
+.popupwin-header{
+	width: 20px;
+	height: 100%;
+	border-color: red;
+}
+.popupwin-body{
+	
+}
+</style>
+</head>
+<body>
+	<input type="button" onclick="openWin();" value="Open"/>
+
+</body>
+</html>

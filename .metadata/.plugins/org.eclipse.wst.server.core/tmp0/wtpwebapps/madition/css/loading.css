@@ -1,0 +1,64 @@
+.ui-header{
+    /*z-index: 999999 !important;*/
+}
+.mobile_wrong {
+    display: block;
+    position: absolute;
+    left:40% !important;
+    top:35px !important;
+    color:red;
+    font-size:.6em;
+    text-align: center;
+    -webkit-border-radius:8px;
+    -moz-border-radius:8px;
+    border-radius:8px;
+}
+
+/*加载时*/
+.ajax-loading-mask {
+    position: absolute;
+    z-index: 9999;
+    height: 2000px;
+    width: 2000px;
+    background: transparent;
+    top: 0;
+    left: 0;
+}
+
+.loading-icon {
+    width: 48px;
+    height: 48px;
+    position: absolute;
+    z-index: 10000;
+}
+
+#loading-mask{
+    position:absolute;
+    left:0;
+    top:0;
+    width:100%;
+    height:100%;
+    z-index:20000;
+    filter:alpha(opacity=40);
+    opacity:0.40;
+    background:#9FD4EE;
+}
+.zhezhao{
+    position: absolute;
+    z-index: 999;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,.25);
+    display:none;
+    padding-top: 50%;
+    box-sizing:border-box;
+}
+.loading{
+    opacity: 1;
+    margin: 0 auto;
+    display: block !important;
+    width: 46px !important;
+    height: 46px !important;
+    z-index:20001;
+    background:url("../images/ajax-loader.gif") no-repeat;
+}

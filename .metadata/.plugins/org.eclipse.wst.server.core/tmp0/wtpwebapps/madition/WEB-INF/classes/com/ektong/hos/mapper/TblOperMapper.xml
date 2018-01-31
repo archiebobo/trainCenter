@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- null -->
+<mapper namespace="com.ektong.hos.mapper.TblOperMapper">
+
+	<!-- 添加 -->
+	<insert id="insert" parameterType="TblOper">
+		INSERT INTO TBL_OPER(SEX,NAME,TEL,ADDR,ZIPNO,PASSWD,USED,STATUS,MENUIDS,ROLEID,FILLER)
+				VALUES(#{sex},#{name},#{tel},#{addr},#{zipno},#{passwd},#{used},#{status},#{menuids},#{roleid},#{filler})
+	</insert>
+
+	<!-- 按条件查询多条（不分页） -->
+	<select id="findByEntity" parameterType="TblOper" resultType="TblOper">
+		SELECT TAB.OPERID,TAB.SEX,TAB.NAME,TAB.TEL,TAB.ADDR,TAB.ZIPNO,TAB.PASSWD,TAB.USED,TAB.STATUS,TAB.MENUIDS,TAB.FILLER
+			FROM TBL_OPER TAB
+			<where>
+				<if test="operid!=null and operid!='' ">AND TAB.OPERID = #{operid}</if>
+				<if test="sex!=null and sex!='' ">AND TAB.SEX = #{sex}</if>
+				<if test="name!=null and name!='' ">AND TAB.NAME = #{name}</if>
+				<if test="tel!=null and tel!='' ">AND TAB.TEL = #{tel}</if>
+				<if test="addr!=null and addr!='' ">AND TAB.ADDR = #{addr}</if>
+				<if test="zipno!=null and zipno!='' ">AND TAB.ZIPNO = #{zipno}</if>
+				<if test="passwd!=null and passwd!='' ">AND TAB.PASSWD = #{passwd}</if>
+				<if test="used!=null and used!='' ">AND TAB.USED = #{used}</if>
+				<if test="status!=null and status!='' ">AND TAB.STATUS = #{status}</if>
+				<if test="menuids!=null and menuids!='' ">AND TAB.MENUIDS = #{menuids}</if>
+				<if test="filler!=null and filler!='' ">AND TAB.FILLER = #{filler}</if>
+			</where>
+		ORDER BY TAB.OPERID DESC
+	</select>
+
+	<!-- 按ID查询一条 -->
+	<select id="findById" parameterType="int" resultType="TblOper">
+		SELECT TAB.OPERID,TAB.SEX,TAB.NAME,TAB.TEL,TAB.ADDR,TAB.ZIPNO,TAB.PASSWD,TAB.USED,TAB.STATUS,TAB.MENUIDS,TAB.FILLER,TAB.ROLEID
+				FROM TBL_OPER TAB WHERE TAB.OPERID = #{operid}
+	</select>
+
+	<!-- 按ID删除一条 -->
+	<delete id="delete" parameterType="int">
+		DELETE FROM TBL_OPER TAB WHERE TAB.OPERID = #{operid}
+	</delete>
+
+	<!-- 按ID修改 -->
+	<update id="update" parameterType="TblOper">
+		UPDATE TBL_OPER 
+		<set>
+			<if test="sex!=null and sex!='' ">SEX = #{sex},</if>
+			<if test="name!=null and name!='' ">NAME = #{name},</if>
+			<if test="tel!=null and tel!='' ">TEL = #{tel},</if>
+			<if test="addr!=null and addr!='' ">ADDR = #{addr},</if>
+			<if test="zipno!=null and zipno!='' ">ZIPNO = #{zipno},</if>
+			<if test="passwd!=null and passwd!='' ">PASSWD = #{passwd},</if>
+			<if test="used!=null and used!='' ">USED = #{used},</if>
+			<if test="status!=null and status!='' ">STATUS = #{status},</if>
+			<if test="menuids!=null and menuids!='' ">MENUIDS = #{menuids},</if>
+			<if test="roleid!=null and roleid!='' ">roleid = #{roleid},</if>
+			<if test="filler!=null and filler!='' ">FILLER = #{filler},</if>
+		</set>
+		WHERE OPERID = #{operid}
+	</update>
+
+	<!-- 按条件查询多条（分页） -->
+	<select id="findByEntityOnPage" parameterType="TblOper" resultType="TblOper">
+		SELECT TAB.OPERID,TAB.SEX,TAB.NAME,TAB.TEL,TAB.ADDR,TAB.ZIPNO,TAB.PASSWD,TAB.USED,TAB.STATUS,TAB.MENUIDS,TAB.FILLER,TAB.ROLEID,TRB.ROLENAME
+			FROM TBL_OPER TAB,tbl_role TRB WHERE TAB.ROLEID = TRB.ROLEID 
+				<if test="operid!=null and operid!='' ">AND TAB.OPERID = #{operid}</if>
+				<if test="sex!=null and sex!='' ">AND TAB.SEX = #{sex}</if>
+				<if test="name!=null and name!='' ">AND TAB.NAME = #{name}</if>
+				<if test="tel!=null and tel!='' ">AND TAB.TEL = #{tel}</if>
+				<if test="addr!=null and addr!='' ">AND TAB.ADDR = #{addr}</if>
+				<if test="zipno!=null and zipno!='' ">AND TAB.ZIPNO = #{zipno}</if>
+				<if test="passwd!=null and passwd!='' ">AND TAB.PASSWD = #{passwd}</if>
+				<if test="used!=null and used!='' ">AND TAB.USED = #{used}</if>
+				<if test="status!=null and status!='' ">AND TAB.STATUS = #{status}</if>
+				<if test="menuids!=null and menuids!='' ">AND TAB.MENUIDS = #{menuids}</if>
+				<if test="filler!=null and filler!='' ">AND TAB.FILLER = #{filler}</if>
+				AND TAB.OPERID <![CDATA[>]]> (#{pageNo}-1) * #{pageSize} AND TAB.OPERID <![CDATA[<=]]> #{pageNo} * #{pageSize}
+	</select>
+
+	<!-- 按条件查询总数（用于分页） -->
+	<select id="findByEntityOnPageCount" parameterType="TblOper" resultType="int">
+		SELECT COUNT(1) 
+			FROM TBL_OPER TAB
+			<where>
+				<if test="operid!=null and operid!='' ">AND TAB.OPERID = #{operid}</if>
+				<if test="sex!=null and sex!='' ">AND TAB.SEX = #{sex}</if>
+				<if test="name!=null and name!='' ">AND TAB.NAME = #{name}</if>
+				<if test="tel!=null and tel!='' ">AND TAB.TEL = #{tel}</if>
+				<if test="addr!=null and addr!='' ">AND TAB.ADDR = #{addr}</if>
+				<if test="zipno!=null and zipno!='' ">AND TAB.ZIPNO = #{zipno}</if>
+				<if test="passwd!=null and passwd!='' ">AND TAB.PASSWD = #{passwd}</if>
+				<if test="used!=null and used!='' ">AND TAB.USED = #{used}</if>
+				<if test="status!=null and status!='' ">AND TAB.STATUS = #{status}</if>
+				<if test="menuids!=null and menuids!='' ">AND TAB.MENUIDS = #{menuids}</if>
+				<if test="filler!=null and filler!='' ">AND TAB.FILLER = #{filler}</if>
+			</where>
+	</select>
+
+</mapper>

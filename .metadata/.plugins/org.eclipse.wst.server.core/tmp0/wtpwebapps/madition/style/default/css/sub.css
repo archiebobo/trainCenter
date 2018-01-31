@@ -1,0 +1,503 @@
+@charset "utf-8";
+/* CSS Document */
+
+* {
+	margin:0;
+	padding:0;
+}
+html, body {
+	font-size:12px;
+	font-family:Arial, Helvetica, sans-serif;
+	color:#333;
+	background:#F4F5F6;
+}
+img {
+	border:0;
+}
+font {
+	color:#F00;
+	font-size:12px;
+	padding:0 3px;
+}
+
+a {
+	color:#333;
+	text-decoration:none;
+}
+	a:hover {
+		color:#1484E6;
+		text-decoration:underline;
+	}
+	
+table a {
+	color:#444;
+	text-decoration:underline;
+}
+	table a:hover {
+		color:#1484E6;
+		text-decoration:none;
+	}
+.yinc {
+	width:300px;
+	border: 1px solid #3399CC;
+	display:none;
+	position:absolute;
+	z-index:11;
+	background-color:#EAF7FE;
+	padding:5px;
+}	
+	
+.listTab, .searchTab, .searchListTab, .muchInfoTab, .editorTab, .textDetaTab, .editorFixTab {
+	border:1px solid #fff;
+	margin:10px 0 0 10px;
+	width:98%;
+	background:#fff;
+	color:#444;
+}
+	.listTab table, .searchTab table, .searchListTab table, .muchInfoTab table, .editorTab table, .textDetaTab table, .editorFixTab table {
+		width:100%;
+		border:1px solid #CFCFCF;
+		border-collapse:collapse;
+	}
+	.listTab table, .searchListTab table, .muchInfoTab table {
+		text-align:center;
+	}
+	.listTab table td, .searchListTab table td, .muchInfoTab table td {
+		border:1px solid #CFCFCF;
+		padding:5px;
+		white-space:nowrap;
+	}
+	.listTab table thead td, .searchListTab table thead td, .muchInfoTab table thead td, .tableHeader {
+		background:#E4E4E4;
+		font-weight:bold;
+	}
+	.listTab table tbody tr:hover, .searchListTab table tbody tr:hover, .muchInfoTab table tbody tr:hover {
+		background:#EFEFEF;
+	}
+	.listTab table a img{
+		margin:0 5px;
+		vertical-align:middle;
+	}
+/*---------列表信息显示表格样式------*/
+
+
+.add, .del, .modi, .audit, .view, .disc, .enable, .exec, .work, .accept, .set, .return, .choose, .feedback, .report, .authorized {
+	padding-left:13px;
+	margin:0 8px;
+	display:inline-block;
+}
+	.add {
+		background:url(../../images/ico_08.gif) no-repeat left center;
+	}/*---------添加------*/
+	
+	.del {
+		background:url(../../images/ico_09.gif) no-repeat left center;
+	}/*---------删除------*/
+	
+	.modi {
+		background:url(../../images/ico_10.gif) no-repeat left center;
+	}/*---------修改------*/
+	
+	.audit{
+		background:url(../../images/ico_13.gif) no-repeat left center;
+	}/*---------审核------*/
+	
+	.view{
+		background:url(../../images/ico_14.gif) no-repeat left center;
+	}/*---------查看------*/
+	
+	.disc{
+		background:url(../../images/ico_15.gif) no-repeat left center;
+	}/*---------停用------*/
+	
+	.enable{
+		background:url(../../images/ico_16.gif) no-repeat left center;
+	}/*---------启用------*/
+	
+	.exec{
+		background:url(../../images/ico_17.gif) no-repeat left center;
+	}/*---------执行------*/
+	
+	.work{
+		background:url(../../images/ico_18.gif) no-repeat left center;
+	}/*---------派工------*/
+	
+	.accept{
+		background:url(../../images/ico_19.gif) no-repeat left center;
+	}/*---------受理------*/
+	
+	.set{
+		background:url(../../images/ico_20.gif) no-repeat left center;
+	}/*---------设置------*/
+	
+	.return{
+		background:url(../../images/ico_21.gif) no-repeat left center;
+	}/*---------回访------*/
+	
+	.choose{
+		background:url(../../images/ico_22.gif) no-repeat left center;
+	}/*---------选择------*/
+	
+	.feedback{
+		background:url(../../images/ico_23.gif) no-repeat left center;
+	}/*---------回馈------*/
+	
+	.report{
+		background:url(../../images/ico_24.gif) no-repeat left center;
+	}/*---------上报系统------*/
+	.authorized{
+		background:url(../../images/ico_25.gif) no-repeat left center;
+	}/*---------授权------*/
+	
+/*---------列表表格里 操作列 操作表格行信息项连接  样式------*/
+
+
+.tdLeft {
+	text-align:left;
+}
+	.tdRight, .textboxRight {
+		text-align:right;
+	}
+	.textboxRight {padding-right:2px;}
+	
+    .tdCenter{
+        text-align:center;
+     }	
+/*---------表格单元格内容 左对齐 右对齐------**/
+
+
+.title {
+	margin:10px 0 0 10px;
+	margin-bottom:-5px;
+}
+	.title {
+		background:url(../../images/titleIco.png) no-repeat 5px center;
+		padding-left:25px;
+		color:#0B67A8;
+		font-weight:bold;
+		font-size:12px;
+	}
+.tabBtns{
+	padding:10px 0 0 10px;
+	margin-bottom:-5px;
+}
+/*---------表格操作按钮显示位置、 表格信息题目  样式-----*/
+
+
+.tabPaging {
+	margin:5px 0 0 0;
+	text-align:right;
+	width:98%;
+	color:#999;
+}
+	.tabPaging a {
+		color:#999;
+	}
+	.tabPaging a:hover {
+		color:#1484E6;
+	}
+	.tabPaging .start, .tabPaging .end, .tabPaging .up, .tabPaging .next {
+		height:16px;
+		width:16px;
+		border:0;
+		cursor:pointer;
+		margin:0 5px;
+	}
+	.tabPaging .start{
+		background:url(../../images/startIco.gif) no-repeat;
+	}
+	.tabPaging .end{
+		background:url(../../images/endIco.gif) no-repeat;
+	}
+	.tabPaging .up{
+		background:url(../../images/upIco.gif) no-repeat;
+	}
+	.tabPaging .next{
+		background:url(../../images/nextIco.gif) no-repeat;
+	}
+/*---------表格分页样式------*/
+
+
+.infoTips {
+	margin-left:15px;
+}
+/*---------表格 填写信息显示位置 样式------*/
+
+
+.searchTab table th, .editorTab table th, .editorFixTab table th {
+	font-weight:normal;
+	text-align:right;
+	padding:5px 3px;
+	white-space:nowrap;
+}
+	.searchTab table td, .editorTab table td, .editorFixTab table td {
+		padding:5px 3px;
+	}
+	.searchListTab table tbody tr:hover {
+		cursor:pointer;
+	}
+/*---------查询条件表格样式------*/
+
+
+.muchInfoTab {
+	overflow-x:scroll;
+}
+/*---------字段多 表格 样式------*/
+
+
+.editorTab table th, .editorTab table td, .editorFixTab table th, .editorFixTab table td {
+	border:1px solid #CFCFCF;
+}
+	.editorTab table th, .editorFixTab table th {
+		background:#EFEFEF;
+		width:11%;
+	}
+	.editorFixTab{
+	    width:90%;
+	}
+	.editorFixTab table th{
+	    width:100px;
+	}
+/*---------编辑填写内容 表单 表格、及表格详细信息显示 表格  样式------*/
+
+
+.searchTab table a, .editorTab table a, .editorFixTab table a {
+	text-decoration:none;
+	color:#444;
+}
+	.searchTab table a img, .editorTab table a img, .editorFixTab table a img {
+		margin-left:5px;
+		vertical-align:middle;
+	}
+	.searchTab table a, input, .editorTab table a input, .editorFixTab table a input {
+		vertical-align:middle;
+	}
+/*---------表单编辑提示图标样式（比如：点击选择、点击日期提示）------*/
+
+
+.textDetaTab .txtTitle {
+	background:#efefef;
+	border-bottom:1px solid #CFCFCF;
+	font-size:18px;
+	padding:10px;
+	text-align:center;
+	font-weight:bold;
+}
+	.textDetaTab .txtSubTitle {
+		border-bottom:1px dashed #CFCFCF;
+		text-align:center;
+		padding:5px;
+	}
+	.textDetaTab .txtContent {
+		text-indent:2em;
+		line-height:25px;
+		padding:10px;
+	}
+/*---------文本详细内容布局样式（比如：公告通知、等的详细信息内容）------*/
+
+
+.btns {
+	margin-top:10px;
+	text-align:center;
+}
+/*---------操作按钮位置，居中显示-----*/
+
+
+.downMenu {
+	width:155px;
+}/*---------下拉菜单------*/
+
+.timeTextbox {
+	width:62px;
+}/*---------日期文本框（比如：起止日期）------*/
+
+.manyLineTextbox {
+	width:90%;
+}/*---------多行文本框------*/
+
+.unenterTextbox {
+	border:1px solid #999;
+	background:#eee;
+	height:20px;
+	line-height:20px;
+	padding-left:2px;
+}/*---------灰色不能操作的文本框------*/
+
+.btn {
+	background:url(../imgs/btnL_01.png) no-repeat left center;
+	margin:0 3px;
+	display:inline-block;
+}
+	.btn input {
+		border:0;
+		background:url(../imgs/btnR_01.png) no-repeat right center;
+		height:25px;
+		color:#FFF;
+		cursor:pointer;
+		padding:0 10px;
+	}
+	.btn:hover {
+		background:url(../imgs/btnL_02.png) no-repeat left center;
+	}
+	.btn:hover input {
+		background:url(../imgs/btnR_02.png) no-repeat right center;
+	}/*---------按钮------*/
+
+/*---------表单元素样式------*/
+
+
+.fileDomainShow {
+	margin:0;
+	padding:0;
+	height:22px;
+}
+	.fileTextbox {
+		width:315px;
+	}
+	.fileBtn {
+		background:url(../imgs/btn.jpg) no-repeat;
+		height:22px;
+		width:78px;
+		border:0;
+		color:#FFF;
+		cursor:pointer;
+	}
+	.fileDomainHide {
+		margin:0;
+		padding:0;
+		height:22px;
+		margin:-21px 0 0 0;
+	}
+	.fileDomainHide input {
+		width:400px;
+		cursor:pointer;
+		filter: Alpha(Opacity=0); /* for IE */
+		opacity: .0;/* for Firefox */
+	}
+/*---------附件上传 浏览按钮样式------*/
+
+
+
+.msgFalse, .msgBan {
+	border:1px solid #f07a7a;
+	width:400px;
+	padding:20px 20px 20px 100px;
+	margin:100px auto 0 auto;
+}
+	.msgFalse {
+		background:#ffeeee url(../../images/msgImg2.png) no-repeat 20px 20px;
+	}/*--------操作失败提示样式-------*/
+	
+	.msgBan {
+		background:#ffeeee url(../../images/msgImg3.png) no-repeat 20px 20px;
+	}/*--------无权限、禁止操作提示样式-------*/
+	
+	.msgFalse dt, .msgBan dt {
+		font-size:14px;
+		font-weight:bold;
+		color:#e82900;
+	}
+	.msgFalse dd, .msgBan dd {
+		margin:0;
+		padding-top:12px;
+		color:#e82900;
+	}
+
+
+.msgSuccess {
+	background:#f5ffeb url(../../images/msgImg1.png) no-repeat 20px 20px;
+	border:1px solid #5fb945;
+	width:400px;
+	padding:20px 20px 20px 100px;
+	margin:100px auto 0 auto;
+}
+	.msgSuccess dt {
+		font-size:14px;
+		font-weight:bold;
+		color:#439506;
+	}
+	.msgSuccess dd {
+		margin:0;
+		padding-top:12px;
+		color:#439506;
+	}/*-------操作成功提示--------*/
+	
+/*---------操作信息提示页面样式------*/
+
+
+#struTopL, #struTopR, #struBottomL, #struBottomR{
+	float:left;
+	overflow:auto;
+}
+	#struTopL, #struTopR{
+		height:320px;
+	}
+	#struTopL, #struBottomL{
+		width:810px;
+	}
+	#struTopL{
+		overflow:hidden;
+	}
+	#struTopL table th{
+		width:auto;
+	}
+/*---------四块结构页面样式------*/
+
+
+.struLeft, .struRight{
+	height:100%;
+	overflow-y:auto;
+	float:left;
+}
+	.struLeft{
+		width:300px;
+	}
+/*---------左右结构页面样式------*/
+
+
+.struTop, .struBottom{
+	height:50%;
+	overflow-y:auto;
+}
+/*---------上下结构页面样式------*/
+
+.nousecount {
+	background-color: rgb(249,243,201);
+}
+/*---------已无退库量样式--------*/
+
+.quickColumnSet{
+	width:900px; height:450px;
+	overflow:auto;
+	border:1px solid #fff;
+	margin:10px auto;
+	background:#fff;
+}
+.quickColumnSet table{
+	border-collapse:collapse;
+	width:100%;
+	border:1px solid #CFCFCF;
+}
+.quickColumnSet table th{
+	text-align:left;
+	font-weight:bold;
+	padding:5px 10px;
+	background:#E4E4E4;
+	border:1px solid #CFCFCF;
+}
+.quickColumnSet table a{
+	color:#444;
+	text-decoration:none;
+	outline:none;
+	display:block;
+}
+.quickColumnSet table img, .quickColumnSet table td input{
+	margin-right:5px;
+}
+.quickColumnSet table td{
+	border:1px solid #CFCFCF;
+	background:#fff;
+	padding:5px 30px;
+}
+
+/*---------快捷栏目设置页面样式--------*/

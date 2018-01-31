@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- null -->
+<mapper namespace="com.ektong.hos.mapper.TblRoleMapper">
+
+	<!-- 添加 -->
+	<insert id="insert" parameterType="TblRole">
+		INSERT INTO tbl_role(ROLENAME,UPDDATE,UPDTIME,REMARK)
+				VALUES(#{rolename},#{upddate},#{updtime},#{remark})
+	</insert>
+
+	<!-- 按条件查询多条（不分页） -->
+	<select id="findByEntity" parameterType="TblRole" resultType="TblRole">
+		SELECT TAB.ROLEID,TAB.ROLENAME,TAB.UPDDATE,TAB.UPDTIME,TAB.REMARK
+			FROM tbl_role TAB
+			<where>
+				<if test="roleid!=null and roleid!='' ">AND TAB.ROLEID = #{roleid}</if>
+				<if test="rolename!=null and rolename!='' ">AND TAB.ROLENAME = #{rolename}</if>
+				<if test="upddate!=null and upddate!='' ">AND TAB.UPDDATE = #{upddate}</if>
+				<if test="updtime!=null and updtime!='' ">AND TAB.UPDTIME = #{updtime}</if>
+				<if test="remark!=null and remark!='' ">AND TAB.REMARK = #{remark}</if>
+			</where>
+		ORDER BY TAB.ROLEID DESC
+	</select>
+
+	<!-- 按ID查询一条 -->
+	<select id="findById" parameterType="int" resultType="TblRole">
+		SELECT TAB.ROLEID,TAB.ROLENAME,TAB.UPDDATE,TAB.UPDTIME,TAB.REMARK
+				FROM tbl_role TAB WHERE TAB.ROLEID = #{roleid}
+	</select>
+
+	<!-- 按ID删除一条 -->
+	<delete id="delete" parameterType="int">
+		DELETE FROM tbl_role TAB WHERE TAB.ROLEID = #{roleid}
+	</delete>
+
+	<!-- 按ID修改 -->
+	<update id="update" parameterType="TblRole">
+		UPDATE TAB
+		<set>
+			<if test="rolename!=null and rolename!='' ">TAB.ROLENAME = #{rolename},</if>
+			<if test="upddate!=null and upddate!='' ">TAB.UPDDATE = #{upddate},</if>
+			<if test="updtime!=null and updtime!='' ">TAB.UPDTIME = #{updtime},</if>
+			<if test="remark!=null and remark!='' ">TAB.REMARK = #{remark},</if>
+		</set>
+		FROM tbl_role TAB WHERE TAB.ROLEID = #{roleid}
+	</update>
+
+	<!-- 按条件查询多条（分页） -->
+	<select id="findByEntityOnPage" parameterType="TblRole" resultType="TblRole">
+		SELECT TAB.ROLEID,TAB.ROLENAME,TAB.UPDDATE,TAB.UPDTIME,TAB.REMARK
+			FROM tbl_role TAB
+			<where>
+				<if test="roleid!=null and roleid!='' ">AND TAB.ROLEID = #{roleid}</if>
+				<if test="rolename!=null and rolename!='' ">AND TAB.ROLENAME LIKE '%'||#{rolename}||'%'</if>
+				<if test="upddate!=null and upddate!='' ">AND TAB.UPDDATE = #{upddate}</if>
+				<if test="updtime!=null and updtime!='' ">AND TAB.UPDTIME = #{updtime}</if>
+				<if test="remark!=null and remark!='' ">AND TAB.REMARK = #{remark}</if>
+				AND TAB.ROLEID <![CDATA[>]]> (#{pageNo}-1) * #{pageSize} AND TAB.ROLEID <![CDATA[<=]]> #{pageNo} * #{pageSize}
+			</where>
+	</select>
+
+	<!-- 按条件查询总数（用于分页） -->
+	<select id="findByEntityOnPageCount" parameterType="TblRole" resultType="int">
+		SELECT COUNT(1) 
+			FROM tbl_role TAB
+			<where>
+				<if test="roleid!=null and roleid!='' ">AND TAB.ROLEID = #{roleid}</if>
+				<if test="rolename!=null and rolename!='' ">AND TAB.ROLENAME LIKE '%'||#{rolename}||'%'</if>
+				<if test="upddate!=null and upddate!='' ">AND TAB.UPDDATE = #{upddate}</if>
+				<if test="updtime!=null and updtime!='' ">AND TAB.UPDTIME = #{updtime}</if>
+				<if test="remark!=null and remark!='' ">AND TAB.REMARK = #{remark}</if>
+			</where>
+	</select>
+	<!-- 查询下个roleid -->
+	<select id="getNextId" parameterType="TblRole" resultType="int">
+		SELECT max(ROLEID)+1 from tbl_role
+	</select>
+</mapper>

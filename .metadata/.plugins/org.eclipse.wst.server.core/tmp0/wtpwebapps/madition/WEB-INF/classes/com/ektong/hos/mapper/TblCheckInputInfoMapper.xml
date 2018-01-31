@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- null -->
+<mapper namespace="com.ektong.hos.mapper.TblCheckInputInfoMapper">
+
+<!-- 按custid BATCHNO查询 -->
+	<select id="findByCustidAndBat" parameterType="TblCheckInputInfo" resultType="TblCheckInputInfo">
+		SELECT TAB.INPUTID,TAB.CUSTID,TAB.BATCHNO,TAB.ISINPUT1,TAB.OPERID1,TAB.CRTDATE1,TAB.CRTTIME1,TAB.ISINPUT2,TAB.OPERID2,TAB.CRTDATE2,TAB.CRTTIME2,TAB.REMARK,TAB.FLAG
+				FROM TBL_CHECK_INPUT_INFO TAB WHERE TAB.CUSTID = #{custid} AND TAB.BATCHNO = #{batchno}
+	</select>
+	<!-- 按custid BATCHNO查询 -->
+	<select id="findByCustid" parameterType="TblCheckInputInfo" resultType="TblCheckInputInfo">
+		SELECT TAB.INPUTID,TAB.CUSTID,TAB.BATCHNO,TAB.ISINPUT1,TAB.OPERID1,TAB.CRTDATE1,TAB.CRTTIME1,TAB.ISINPUT2,TAB.OPERID2,TAB.CRTDATE2,TAB.CRTTIME2,TAB.REMARK,TAB.FLAG
+				FROM TBL_CHECK_INPUT_INFO TAB WHERE TAB.CUSTID = #{custid} AND TAB.BATCHNO = #{batchno}
+	</select>
+	
+	<!-- 添加 -->
+	<insert id="insert" parameterType="TblCheckInputInfo">
+		INSERT INTO TBL_CHECK_INPUT_INFO(CUSTID,BATCHNO,ISINPUT1,OPERID1,CRTDATE1,CRTTIME1,ISINPUT2,OPERID2,CRTDATE2,CRTTIME2,REMARK)
+				VALUES(#{custid},#{batchno},#{isinput1},#{operid1},#{crtdate1},#{crttime1},#{isinput2},#{operid2},#{crtdate2},#{crttime2},#{remark})
+	</insert>
+
+	<!-- 按条件查询多条（不分页） -->
+	<select id="findByEntity" parameterType="TblCheckInputInfo" resultType="TblCheckInputInfo">
+		SELECT TAB.INPUTID,TAB.CUSTID,TAB.BATCHNO,TCB.BATCHNAME,TAB.ISINPUT1,TAB.OPERID1,TAB.CRTDATE1,TAB.CRTTIME1,TAB.ISINPUT2,TAB.OPERID2,TAB.CRTDATE2,TAB.CRTTIME2,TAB.REMARK,TAB.FLAG,TRB.CUSTNAME,TRB.UNIT,TRB.STUEMPNO,TRB.STATUS,TRB.MAJO,TRB.ADDR
+			FROM TBL_CHECK_INPUT_INFO TAB,tbl_check_customer TRB,tbl_check_batchset TCB WHERE TAB.CUSTID = TRB.CUSTID AND TAB.BATCHNO = TCB.BATCHNO
+				<if test="inputid!=null and inputid!='' ">AND TAB.INPUTID = #{inputid}</if>
+				<if test="custid!=null and custid!='' ">AND TAB.CUSTID = #{custid}</if>
+				<if test="batchno!=null and batchno!='' ">AND TAB.BATCHNO = #{batchno}</if>
+				<if test="isinput1!=null and isinput1!='' ">AND TAB.ISINPUT1 = #{isinput1}</if>
+				<if test="operid1!=null and operid1!='' ">AND TAB.OPERID1 = #{operid1}</if>
+				<if test="crtdate1!=null and crtdate1!='' ">AND TAB.CRTDATE1 = #{crtdate1}</if>
+				<if test="crttime1!=null and crttime1!='' ">AND TAB.CRTTIME1 = #{crttime1}</if>
+				<if test="isinput2!=null and isinput2!='' ">AND TAB.ISINPUT2 = #{isinput2}</if>
+				<if test="operid2!=null and operid2!='' ">AND TAB.OPERID2 = #{operid2}</if>
+				<if test="crtdate2!=null and crtdate2!='' ">AND TAB.CRTDATE2 = #{crtdate2}</if>
+				<if test="crttime2!=null and crttime2!='' ">AND TAB.CRTTIME2 = #{crttime2}</if>
+				<if test="remark!=null and remark!='' ">AND TAB.REMARK = #{remark}</if>
+				<if test="stuempno!=null and stuempno!='' ">AND TRB.STUEMPNO = #{stuempno}</if>
+				<if test="unit!=null and unit!='' ">AND TRB.UNIT = #{unit}</if>
+				<if test="addr!=null and addr!='' ">AND TRB.ADDR = #{addr}</if>
+				<if test="custname!=null and custname!='' ">AND TRB.CUSTNAME = #{custname}</if>
+				<if test="status!=null and status!='' ">AND TRB.STATUS = #{status}</if>
+		ORDER BY TAB.INPUTID DESC
+	</select>
+
+	<!-- 按ID查询一条 -->
+	<select id="findById" parameterType="int" resultType="TblCheckInputInfo">
+		SELECT TAB.INPUTID,TAB.CUSTID,TAB.BATCHNO,TAB.ISINPUT1,TAB.OPERID1,TAB.CRTDATE1,TAB.CRTTIME1,TAB.ISINPUT2,TAB.OPERID2,TAB.CRTDATE2,TAB.CRTTIME2,TAB.REMARK
+				FROM TBL_CHECK_INPUT_INFO TAB WHERE TAB.INPUTID = #{inputid}
+	</select>
+
+	<!-- 按ID删除一条 -->
+	<delete id="delete" parameterType="int">
+		DELETE FROM TBL_CHECK_INPUT_INFO TAB WHERE TAB.INPUTID = #{inputid}
+	</delete>
+
+	<!-- 按ID修改 -->
+	<update id="update" parameterType="TblCheckInputInfo">
+		UPDATE TAB
+		<set>
+			<if test="isinput1!=null and isinput1!='' ">TAB.ISINPUT1 = #{isinput1},</if>
+			<if test="operid1!=null and operid1!='' ">TAB.OPERID1 = #{operid1},</if>
+			<if test="crtdate1!=null and crtdate1!='' ">TAB.CRTDATE1 = #{crtdate1},</if>
+			<if test="crttime1!=null and crttime1!='' ">TAB.CRTTIME1 = #{crttime1},</if>
+			<if test="isinput2!=null and isinput2!='' ">TAB.ISINPUT2 = #{isinput2},</if>
+			<if test="operid2!=null and operid2!='' ">TAB.OPERID2 = #{operid2},</if>
+			<if test="crtdate2!=null and crtdate2!='' ">TAB.CRTDATE2 = #{crtdate2},</if>
+			<if test="crttime2!=null and crttime2!='' ">TAB.CRTTIME2 = #{crttime2},</if>
+			<if test="remark!=null and remark!='' ">TAB.REMARK = #{remark},</if>
+			<if test="flag!=null and flag!='' ">TAB.FLAG = #{flag},</if>
+		</set>
+		FROM TBL_CHECK_INPUT_INFO TAB WHERE TAB.CUSTID = #{custid} AND TAB.BATCHNO = #{batchno}
+	</update>
+
+	<!-- 按条件查询多条（分页） -->
+	<select id="findByEntityOnPage" parameterType="TblCheckInputInfo" resultType="TblCheckInputInfo">
+	<![CDATA[
+	SELECT T.* FROM( SELECT TAB.*,ROWNUM AS RN FROM(
+	]]>
+		SELECT TAB.INPUTID,TAB.CUSTID,TAB.BATCHNO,TAB.ISINPUT1,TAB.OPERID1,TAB.CRTDATE1,TAB.CRTTIME1,TAB.ISINPUT2,TAB.OPERID2,TAB.CRTDATE2,TAB.CRTTIME2,TAB.REMARK
+			FROM TBL_CHECK_INPUT_INFO TAB
+			<where>
+				<if test="inputid!=null and inputid!='' ">AND TAB.INPUTID = #{inputid}</if>
+				<if test="custid!=null and custid!='' ">AND TAB.CUSTID = #{custid}</if>
+				<if test="batchno!=null and batchno!='' ">AND TAB.BATCHNO = #{batchno}</if>
+				<if test="isinput1!=null and isinput1!='' ">AND TAB.ISINPUT1 = #{isinput1}</if>
+				<if test="operid1!=null and operid1!='' ">AND TAB.OPERID1 = #{operid1}</if>
+				<if test="crtdate1!=null and crtdate1!='' ">AND TAB.CRTDATE1 = #{crtdate1}</if>
+				<if test="crttime1!=null and crttime1!='' ">AND TAB.CRTTIME1 = #{crttime1}</if>
+				<if test="isinput2!=null and isinput2!='' ">AND TAB.ISINPUT2 = #{isinput2}</if>
+				<if test="operid2!=null and operid2!='' ">AND TAB.OPERID2 = #{operid2}</if>
+				<if test="crtdate2!=null and crtdate2!='' ">AND TAB.CRTDATE2 = #{crtdate2}</if>
+				<if test="crttime2!=null and crttime2!='' ">AND TAB.CRTTIME2 = #{crttime2}</if>
+				<if test="remark!=null and remark!='' ">AND TAB.REMARK = #{remark}</if>
+			</where>
+		ORDER BY TAB.INPUTID DESC
+	<![CDATA[
+	) TAB WHERE ROWNUM <= #{pageNo} * #{pageSize}) T WHERE RN > (#{pageNo}-1) * #{pageSize}
+	]]>
+	</select>
+
+	<!-- 按条件查询总数（用于分页） -->
+	<select id="findByEntityOnPageCount" parameterType="TblCheckInputInfo" resultType="int">
+		SELECT COUNT(1) 
+			FROM TBL_CHECK_INPUT_INFO TAB
+			<where>
+				<if test="inputid!=null and inputid!='' ">AND TAB.INPUTID = #{inputid}</if>
+				<if test="custid!=null and custid!='' ">AND TAB.CUSTID = #{custid}</if>
+				<if test="batchno!=null and batchno!='' ">AND TAB.BATCHNO = #{batchno}</if>
+				<if test="isinput1!=null and isinput1!='' ">AND TAB.ISINPUT1 = #{isinput1}</if>
+				<if test="operid1!=null and operid1!='' ">AND TAB.OPERID1 = #{operid1}</if>
+				<if test="crtdate1!=null and crtdate1!='' ">AND TAB.CRTDATE1 = #{crtdate1}</if>
+				<if test="crttime1!=null and crttime1!='' ">AND TAB.CRTTIME1 = #{crttime1}</if>
+				<if test="isinput2!=null and isinput2!='' ">AND TAB.ISINPUT2 = #{isinput2}</if>
+				<if test="operid2!=null and operid2!='' ">AND TAB.OPERID2 = #{operid2}</if>
+				<if test="crtdate2!=null and crtdate2!='' ">AND TAB.CRTDATE2 = #{crtdate2}</if>
+				<if test="crttime2!=null and crttime2!='' ">AND TAB.CRTTIME2 = #{crttime2}</if>
+				<if test="remark!=null and remark!='' ">AND TAB.REMARK = #{remark}</if>
+			</where>
+	</select>
+
+</mapper>

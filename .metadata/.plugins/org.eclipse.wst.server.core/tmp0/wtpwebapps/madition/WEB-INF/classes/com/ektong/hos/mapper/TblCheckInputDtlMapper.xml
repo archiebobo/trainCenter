@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- null -->
+<mapper namespace="com.ektong.hos.mapper.TblCheckInputDtlMapper">
+
+
+<!-- 按条件查询多条（不分页） -->
+	<select id="findMemos1" parameterType="TblCheckInputDtl" resultType="TblCheckInputDtl">
+		SELECT TAB.INPUTID,TAB.INPUTCNT,TAB.PROJID,TAB.SEQNO,TAB.MEMO,TAB.UPDDATE,TAB.UPDTIME,TAB.REMARK,TRB.CUSTID
+			FROM TBL_CHECK_INPUT_DTL TAB,TBL_CHECK_INPUT_INFO TRB WHERE TAB.INPUTID = TRB.INPUTID
+				<if test="inputid!=null and inputid!='' ">AND TAB.INPUTID = #{inputid}</if>
+				AND TAB.INPUTCNT = 1
+		ORDER BY TAB.INPUTID ASC
+	</select>
+		<select id="findMemos2" parameterType="TblCheckInputDtl" resultType="TblCheckInputDtl">
+		SELECT TAB.INPUTID,TAB.INPUTCNT,TAB.PROJID,TAB.SEQNO,TAB.MEMO,TAB.UPDDATE,TAB.UPDTIME,TAB.REMARK,TRB.CUSTID
+			FROM TBL_CHECK_INPUT_DTL TAB,TBL_CHECK_INPUT_INFO TRB WHERE TAB.INPUTID = TRB.INPUTID
+				<if test="inputid!=null and inputid!='' ">AND TAB.INPUTID = #{inputid}</if>
+				AND TAB.INPUTCNT = 2
+		ORDER BY TAB.INPUTID ASC
+	</select>
+<update id="updateDtl" parameterType="TblCheckInputDtl">
+		UPDATE TAB
+		<set>
+			<if test="memo!=null and memo!='' ">TAB.MEMO = #{memo},</if>
+			<if test="upddate!=null and upddate!='' ">TAB.UPDDATE = #{upddate},</if>
+			<if test="updtime!=null and updtime!='' ">TAB.UPDTIME = #{updtime},</if>
+			<if test="remark!=null and remark!='' ">TAB.REMARK = #{remark},</if>
+		</set>
+		FROM TBL_CHECK_INPUT_DTL TAB WHERE TAB.INPUTID = #{inputid} and TAB.PROJID = #{projid} and TAB.INPUTCNT = #{inputcnt}
+	</update>
+<!-- 根据学号、批次号查询 -->
+	<select id="findMemos" parameterType="TblCheckInputDtl" resultType="TblCheckInputDtl">
+	SELECT TAB.INPUTID,TAB.INPUTCNT,TAB.PROJID,TAB.SEQNO,TAB.MEMO,TAB.UPDDATE,TAB.UPDTIME,TAB.REMARK,TDB.SEQNO
+			FROM TBL_CHECK_INPUT_DTL TAB,TBL_CHECK_INPUT_INFO TRB,tbl_check_proj TCB,tbl_check_proj TDB  
+			WHERE TAB.INPUTID = TRB.INPUTID
+			AND TAB.PROJID = TCB.PROJID
+			AND TCB.FPROJID = TDB.PROJID
+			AND TRB.CUSTID = #{custid}
+			AND TRB.BATCHNO = #{batchno}
+			AND TAB.INPUTCNT = 1
+		ORDER BY TDB.SEQNO ASC
+	</select>
+	
+<!-- 根据学号、批次号查询 -->
+	<select id="findDtl" parameterType="TblCheckInputDtl" resultType="TblCheckInputDtl">
+		
+	SELECT TAB.INPUTID,TAB.INPUTCNT,TAB.PROJID,TAB.SEQNO,TAB.MEMO,TAB.UPDDATE,TAB.UPDTIME,TAB.REMARK,TRB.PROJNAME,TRB.FPROJID,TCB.PROJNAME AS FPROJNAME
+			FROM TBL_CHECK_INPUT_DTL TAB,tbl_check_proj TRB,tbl_check_proj TCB 
+			WHERE TAB.PROJID = TRB.PROJID AND TRB.FPROJID = TCB.PROJID
+			AND INPUTID = (SELECT INPUTID FROM tbl_check_input_info WHERE BATCHNO = #{batchno} 
+			AND CUSTID = (SELECT CUSTID FROM tbl_check_customer WHERE STUEMPNO = #{stuempno}))
+		ORDER BY FPROJNAME DESC
+	</select>
+	
+	<!-- 添加 -->
+	<insert id="insert" parameterType="TblCheckInputDtl">
+		INSERT INTO TBL_CHECK_INPUT_DTL(INPUTID,INPUTCNT,PROJID,SEQNO,MEMO,UPDDATE,UPDTIME,REMARK)
+				VALUES(#{inputid},#{inputcnt},#{projid},#{seqno},#{memo},#{upddate},#{updtime},#{remark})
+	</insert>
+
+	<!-- 按条件查询多条（不分页） -->
+	<select id="findByEntity" parameterType="TblCheckInputDtl" resultType="TblCheckInputDtl">
+		SELECT TAB.INPUTID,TAB.INPUTCNT,TAB.PROJID,TAB.SEQNO,TAB.MEMO,TAB.UPDDATE,TAB.UPDTIME,TAB.REMARK,TRB.CUSTID
+			FROM TBL_CHECK_INPUT_DTL TAB,TBL_CHECK_INPUT_INFO TRB WHERE TAB.INPUTID = TRB.INPUTID
+				<if test="inputid!=null and inputid!='' ">AND TAB.INPUTID = #{inputid}</if>
+				<if test="inputcnt!=null and inputcnt!='' ">AND TAB.INPUTCNT = #{inputcnt}</if>
+				<if test="projid!=null and projid!='' ">AND TAB.PROJID = #{projid}</if>
+				<if test="seqno!=null and seqno!='' ">AND TAB.SEQNO = #{seqno}</if>
+				<if test="memo!=null and memo!='' ">AND TAB.MEMO = #{memo}</if>
+				<if test="upddate!=null and upddate!='' ">AND TAB.UPDDATE = #{upddate}</if>
+				<if test="updtime!=null and updtime!='' ">AND TAB.UPDTIME = #{updtime}</if>
+				<if test="remark!=null and remark!='' ">AND TAB.REMARK = #{remark}</if>
+		ORDER BY TAB.INPUTID ASC
+	</select>
+
+	<!-- 按ID查询一条 -->
+	<select id="findById" parameterType="int" resultType="TblCheckInputDtl">
+		SELECT TAB.INPUTID,TAB.INPUTCNT,TAB.PROJID,TAB.SEQNO,TAB.MEMO,TAB.UPDDATE,TAB.UPDTIME,TAB.REMARK
+				FROM TBL_CHECK_INPUT_DTL TAB WHERE TAB.INPUTID = #{inputid}
+	</select>
+
+	<!-- 按ID删除一条 -->
+	<delete id="delete" parameterType="int">
+		DELETE FROM TBL_CHECK_INPUT_DTL TAB WHERE TAB.INPUTID = #{inputid}
+	</delete>
+
+	<!-- 按ID修改 -->
+	<update id="update" parameterType="TblCheckInputDtl">
+		UPDATE TBL_CHECK_INPUT_DTL TAB
+		<set>
+			<if test="inputcnt!=null and inputcnt!='' ">TAB.INPUTCNT = #{inputcnt},</if>
+			<if test="projid!=null and projid!='' ">TAB.PROJID = #{projid},</if>
+			<if test="seqno!=null and seqno!='' ">TAB.SEQNO = #{seqno},</if>
+			<if test="memo!=null and memo!='' ">TAB.MEMO = #{memo},</if>
+			<if test="upddate!=null and upddate!='' ">TAB.UPDDATE = #{upddate},</if>
+			<if test="updtime!=null and updtime!='' ">TAB.UPDTIME = #{updtime},</if>
+			<if test="remark!=null and remark!='' ">TAB.REMARK = #{remark},</if>
+		</set>
+		WHERE TAB.INPUTID = #{inputid}
+	</update>
+
+	<!-- 按条件查询多条（分页） -->
+	<select id="findByEntityOnPage" parameterType="TblCheckInputDtl" resultType="TblCheckInputDtl">
+	<![CDATA[
+	SELECT T.* FROM( SELECT TAB.*,ROWNUM AS RN FROM(
+	]]>
+		SELECT TAB.INPUTID,TAB.INPUTCNT,TAB.PROJID,TAB.SEQNO,TAB.MEMO,TAB.UPDDATE,TAB.UPDTIME,TAB.REMARK
+			FROM TBL_CHECK_INPUT_DTL TAB
+			<where>
+				<if test="inputid!=null and inputid!='' ">AND TAB.INPUTID = #{inputid}</if>
+				<if test="inputcnt!=null and inputcnt!='' ">AND TAB.INPUTCNT = #{inputcnt}</if>
+				<if test="projid!=null and projid!='' ">AND TAB.PROJID = #{projid}</if>
+				<if test="seqno!=null and seqno!='' ">AND TAB.SEQNO = #{seqno}</if>
+				<if test="memo!=null and memo!='' ">AND TAB.MEMO = #{memo}</if>
+				<if test="upddate!=null and upddate!='' ">AND TAB.UPDDATE = #{upddate}</if>
+				<if test="updtime!=null and updtime!='' ">AND TAB.UPDTIME = #{updtime}</if>
+				<if test="remark!=null and remark!='' ">AND TAB.REMARK = #{remark}</if>
+			</where>
+		ORDER BY TAB.INPUTID DESC
+	<![CDATA[
+	) TAB WHERE ROWNUM <= #{pageNo} * #{pageSize}) T WHERE RN > (#{pageNo}-1) * #{pageSize}
+	]]>
+	</select>
+
+	<!-- 按条件查询总数（用于分页） -->
+	<select id="findByEntityOnPageCount" parameterType="TblCheckInputDtl" resultType="int">
+		SELECT COUNT(1) 
+			FROM TBL_CHECK_INPUT_DTL TAB
+			<where>
+				<if test="inputid!=null and inputid!='' ">AND TAB.INPUTID = #{inputid}</if>
+				<if test="inputcnt!=null and inputcnt!='' ">AND TAB.INPUTCNT = #{inputcnt}</if>
+				<if test="projid!=null and projid!='' ">AND TAB.PROJID = #{projid}</if>
+				<if test="seqno!=null and seqno!='' ">AND TAB.SEQNO = #{seqno}</if>
+				<if test="memo!=null and memo!='' ">AND TAB.MEMO = #{memo}</if>
+				<if test="upddate!=null and upddate!='' ">AND TAB.UPDDATE = #{upddate}</if>
+				<if test="updtime!=null and updtime!='' ">AND TAB.UPDTIME = #{updtime}</if>
+				<if test="remark!=null and remark!='' ">AND TAB.REMARK = #{remark}</if>
+			</where>
+	</select>
+
+</mapper>

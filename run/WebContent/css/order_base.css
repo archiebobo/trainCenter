@@ -1,0 +1,142 @@
+html,body{ font-family:Arial;}
+html, body, ul, li, ol, dl, dd, dt, p, h1, h2, h3, h4, h5, h6, form, fieldset, legend, img,select { margin:0; padding:0; } 
+fieldset, img { border:none; } 
+h1, h2, h3, h4, h5, h6{font-weight: normal;}
+/*html,body{font-family: "microsoft yahei",Verdana,Arial,Helvetica,sans-serif;}*/
+
+body{
+	padding: 0px 10px;
+	background: url(../images/bg.png);
+}
+div.hd{
+	text-align: center;
+	font-size: 28px;
+	color: #f60;
+	padding: 10px 0px;
+	font-family: "microsoft yahei",Verdana,Arial,Helvetica,sans-serif;
+}
+div.id_content{
+	text-align: center;
+	margin-top: 8px;
+	overflow: hidden;
+}
+div.id_content input{
+	width:100px;
+	padding: 8px;
+}
+div.order_content{
+	margin: 10px 0px;
+}
+div.order_content > div{
+	float: left;
+}
+div.order_content div.left{
+	margin-right: .4%;
+	width: 49%;
+}
+div.order_content div form fieldset{
+	border: 1px solid #fff;
+	/*padding: 10px;*/
+	padding-left: 10px;
+	/*background: rgba(255, 255, 255, 0.6);*/
+	background: #E5F7FF;
+	min-height: 610px;
+}
+div.order_content div form fieldset legend{
+	font-size: 24px;
+}
+.btnn1{
+	padding:4px 24px;
+	background:#38c;
+	line-height:26px;
+	border:0px;
+	color:#fff;
+	font-size:15px;
+	margin-top: 4px;
+	
+}
+div.order_content div.left form table{
+	width: 600px;
+	max-width: 100%;
+	text-align: center;
+	border-collapse: collapse;
+	margin:10px 0px;
+
+}
+div.order_content div.left form table tr.all{
+	text-align: left;
+}
+div.order_content div.left form table tr{
+	height: 50px;
+	font-size:18px;
+
+}
+div.order_content div.left form table tr td{
+	border: 1px solid #C1E1F2;
+}
+div.order_content div.left form table tr td span{
+	display: block;
+	width: 65px;
+	height: 30px;
+	line-height: 30px;
+	/*border: 1px solid #aaa;*/
+	cursor: pointer;
+	background: #f60;
+	color: #fff;
+	font-size: 14px;
+	margin:0 auto;
+}
+div.order_content div.left form table tr td span.nodec{
+	background: #eaeaea;
+	border: 1px solid #ddd;
+	color: #999;
+}
+div.order_content div.left form table tr td button{
+	  padding: 0px 16px;
+	  height: 36px;
+	  margin-top: 10px;
+	  margin-bottom: 10px;
+	  background: #38c;
+	  color: #fff;
+	  border: none;
+	  font-size:18px;
+}
+.nodec_c{
+	color: #a0a0a0;
+}
+
+
+
+
+
+div.order_content div.right{
+	width: 50%;
+}
+div.order_content div.right table{
+	/*width: 560px;*/
+	/*max-width: 100%;*/
+	width: 100%;
+	min-width: 560px;
+	text-align: center;
+	border-collapse: collapse;
+}
+div.order_content div.right table tr{
+	height: 48px;
+}
+div.order_content div.right table tr td{
+	padding:0px 6px;
+	font-size: 18px;
+	border:1px solid #C1E1F2;
+}
+
+span.tip{
+	color: #f60;
+	font-size: 14px;
+	padding-left:14px;
+}
+
+/*倒计时*/
+div.clock{
+	color: #f00;
+	font-size: 20px;
+}

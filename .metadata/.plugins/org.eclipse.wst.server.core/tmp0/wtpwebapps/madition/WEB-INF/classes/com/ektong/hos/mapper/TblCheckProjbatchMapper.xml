@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- null -->
+<mapper namespace="com.ektong.hos.mapper.TblCheckProjbatchMapper">
+
+<!-- 根据批次查询已关联体检项目 -->
+	<select id="findProject" parameterType="TblCheckProjbatch" resultType="TblCheckProjbatch">
+		SELECT TAB.BATCHNO,TAB.PROJID,TAB.SEQNO,TAB.REMARK,TRB.PROJNAME,TRB.UNIT,TRB.MEMO,TCB.PROJNAME AS FPROJNAME,TCB.SEQNO
+		FROM TBL_CHECK_PROJBATCH TAB,tbl_check_proj TRB,tbl_check_proj TCB
+		WHERE TAB.PROJID = TRB.PROJID AND TRB.fprojid = TCB.PROJID
+				<if test="batchno!=null and batchno!='' ">AND TAB.BATCHNO = #{batchno}</if>
+		ORDER BY TCB.SEQNO ASC
+	</select>
+	
+<!-- 根据批次项目删除一条 -->
+	<delete id="deleteBybatch" parameterType="int">
+		DELETE TAB FROM TBL_CHECK_PROJBATCH TAB WHERE TAB.BATCHNO = #{batchno} AND TAB.PROJID = #{projid}
+	</delete>
+	
+<!-- 查询最大序号seqno -->
+	<select id="queryMaxSeqno" parameterType="TblCheckProjbatch" resultType="Integer">
+		select max(seqno) from dbo.tbl_check_projbatch
+	</select>
+<!-- 按条件查询多条（不分页） -->
+	<select id="queryBybatchno" parameterType="TblCheckProjbatch" resultType="TblCheckProjbatch">
+		SELECT TAB.BATCHNO,TAB.PROJID,TAB.SEQNO,TAB.REMARK,TRB.PROJNAME
+			FROM TBL_CHECK_PROJBATCH TAB,tbl_check_proj TRB WHERE TAB.PROJID = TRB.PROJID
+				<if test="batchno!=null and batchno!='' ">AND TAB.BATCHNO = #{batchno}</if>
+				<if test="projid!=null and projid!='' ">AND TAB.PROJID = #{projid}</if>
+				<if test="seqno!=null and seqno!='' ">AND TAB.SEQNO = #{seqno}</if>
+				<if test="remark!=null and remark!='' ">AND TAB.REMARK = #{remark}</if>
+		ORDER BY TAB.BATCHNO DESC
+	</select>
+	
+	<!-- 添加 -->
+	<insert id="insert" parameterType="TblCheckProjbatch">
+		INSERT INTO TBL_CHECK_PROJBATCH(BATCHNO,PROJID,SEQNO,REMARK)
+				VALUES(#{batchno},#{projid},#{seqno},#{remark})
+	</insert>
+
+	<!-- 按条件查询多条（不分页） -->
+	<select id="findByEntity" parameterType="TblCheckProjbatch" resultType="TblCheckProjbatch">
+		SELECT TAB.BATCHNO,TAB.PROJID,TAB.SEQNO,TAB.REMARK
+			FROM TBL_CHECK_PROJBATCH TAB
+			<where>
+				<if test="batchno!=null and batchno!='' ">AND TAB.BATCHNO = #{batchno}</if>
+				<if test="projid!=null and projid!='' ">AND TAB.PROJID = #{projid}</if>
+				<if test="seqno!=null and seqno!='' ">AND TAB.SEQNO = #{seqno}</if>
+				<if test="remark!=null and remark!='' ">AND TAB.REMARK = #{remark}</if>
+			</where>
+		ORDER BY TAB.BATCHNO DESC
+	</select>
+
+	<!-- 按ID查询一条 -->
+	<select id="findById" parameterType="int" resultType="TblCheckProjbatch">
+		SELECT TAB.BATCHNO,TAB.PROJID,TAB.SEQNO,TAB.REMARK
+				FROM TBL_CHECK_PROJBATCH TAB WHERE TAB.BATCHNO = #{batchno}
+	</select>
+
+	<!-- 按ID删除一条 -->
+	<delete id="delete" parameterType="int">
+		DELETE FROM TBL_CHECK_PROJBATCH TAB WHERE TAB.BATCHNO = #{batchno}
+	</delete>
+
+	<!-- 按ID修改 -->
+	<update id="update" parameterType="TblCheckProjbatch">
+		UPDATE TBL_CHECK_PROJBATCH TAB
+		<set>
+			<if test="projid!=null and projid!='' ">TAB.PROJID = #{projid},</if>
+			<if test="seqno!=null and seqno!='' ">TAB.SEQNO = #{seqno},</if>
+			<if test="remark!=null and remark!='' ">TAB.REMARK = #{remark},</if>
+		</set>
+		WHERE TAB.BATCHNO = #{batchno}
+	</update>
+
+	<!-- 按条件查询多条（分页） -->
+	<select id="findByEntityOnPage" parameterType="TblCheckProjbatch" resultType="TblCheckProjbatch">
+	<![CDATA[
+	SELECT T.* FROM( SELECT TAB.*,ROWNUM AS RN FROM(
+	]]>
+		SELECT TAB.BATCHNO,TAB.PROJID,TAB.SEQNO,TAB.REMARK
+			FROM TBL_CHECK_PROJBATCH TAB
+			<where>
+				<if test="batchno!=null and batchno!='' ">AND TAB.BATCHNO = #{batchno}</if>
+				<if test="projid!=null and projid!='' ">AND TAB.PROJID = #{projid}</if>
+				<if test="seqno!=null and seqno!='' ">AND TAB.SEQNO = #{seqno}</if>
+				<if test="remark!=null and remark!='' ">AND TAB.REMARK = #{remark}</if>
+			</where>
+		ORDER BY TAB.BATCHNO DESC
+	<![CDATA[
+	) TAB WHERE ROWNUM <= #{pageNo} * #{pageSize}) T WHERE RN > (#{pageNo}-1) * #{pageSize}
+	]]>
+	</select>
+
+	<!-- 按条件查询总数（用于分页） -->
+	<select id="findByEntityOnPageCount" parameterType="TblCheckProjbatch" resultType="int">
+		SELECT COUNT(1) 
+			FROM TBL_CHECK_PROJBATCH TAB
+			<where>
+				<if test="batchno!=null and batchno!='' ">AND TAB.BATCHNO = #{batchno}</if>
+				<if test="projid!=null and projid!='' ">AND TAB.PROJID = #{projid}</if>
+				<if test="seqno!=null and seqno!='' ">AND TAB.SEQNO = #{seqno}</if>
+				<if test="remark!=null and remark!='' ">AND TAB.REMARK = #{remark}</if>
+			</where>
+	</select>
+
+</mapper>

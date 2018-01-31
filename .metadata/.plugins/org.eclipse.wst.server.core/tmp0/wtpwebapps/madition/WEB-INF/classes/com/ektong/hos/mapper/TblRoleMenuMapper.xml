@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- null -->
+<mapper namespace="com.ektong.hos.mapper.TblRoleMenuMapper">
+
+	<insert id="insertbatch" parameterType="TblRoleMenu">
+		 INSERT INTO tbl_role_menu(ROLEID,MENUID,FUNCLIST,UPDDATE,UPDTIME)
+				VALUES
+		  <foreach collection="list" item="item" index="index"  separator=",">
+		  	( #{item.roleid}, #{item.menuid}, #{item.funclist},  #{item.upddate}, #{item.updtime} )
+		  </foreach>
+	  </insert>
+  
+	<!-- 添加 -->
+	<insert id="insert" parameterType="TblRoleMenu">
+		INSERT INTO tbl_role_menu(ROLEID,MENUID,FUNCLIST,UPDDATE,UPDTIME)
+				VALUES(#{roleid},#{menuid},#{funclist},#{upddate},#{updtime})
+	</insert>
+
+	<!-- 按条件查询多条（不分页） -->
+	<select id="findByEntity" parameterType="TblRoleMenu" resultType="TblRoleMenu">
+		SELECT TAB.ROLEID,TAB.MENUID,TAB.FUNCLIST,TAB.UPDDATE,TAB.UPDTIME
+			FROM tbl_role_menu TAB
+			<where>
+				<if test="roleid!=null and roleid!='' ">AND TAB.ROLEID = #{roleid}</if>
+				<if test="menuid!=null and menuid!='' ">AND TAB.MENUID = #{menuid}</if>
+				<if test="funclist!=null and funclist!='' ">AND TAB.FUNCLIST = #{funclist}</if>
+				<if test="upddate!=null and upddate!='' ">AND TAB.UPDDATE = #{upddate}</if>
+				<if test="updtime!=null and updtime!='' ">AND TAB.UPDTIME = #{updtime}</if>
+			</where>
+		ORDER BY TAB.ROLEID DESC
+	</select>
+
+	<!-- 按ID查询一条 -->
+	<select id="findById" parameterType="int" resultType="TblRoleMenu">
+		SELECT TAB.ROLEID,TAB.MENUID,TAB.FUNCLIST,TAB.UPDDATE,TAB.UPDTIME
+				FROM tbl_role_menu TAB WHERE TAB.ROLEID = #{roleid}
+	</select>
+
+	<!-- 按ID删除  -->
+	<delete id="delByRoleID" parameterType="int">
+		DELETE TAB FROM tbl_role_menu TAB WHERE TAB.ROLEID = #{roleid}
+	</delete>
+
+	<!-- 按ID修改 -->
+	<update id="update" parameterType="TblRoleMenu">
+		UPDATE tbl_role_menu TAB
+		<set>
+			<if test="menuid!=null and menuid!='' ">TAB.MENUID = #{menuid},</if>
+			<if test="funclist!=null and funclist!='' ">TAB.FUNCLIST = #{funclist},</if>
+			<if test="upddate!=null and upddate!='' ">TAB.UPDDATE = #{upddate},</if>
+			<if test="updtime!=null and updtime!='' ">TAB.UPDTIME = #{updtime},</if>
+		</set>
+		WHERE TAB.ROLEID = #{roleid}
+	</update>
+
+	<!-- 按条件查询多条（分页） -->
+	<select id="findByEntityOnPage" parameterType="TblRoleMenu" resultType="TblRoleMenu">
+	<![CDATA[
+	SELECT T.* FROM( SELECT TAB.*,ROWNUM AS RN FROM(
+	]]>
+		SELECT TAB.ROLEID,TAB.MENUID,TAB.FUNCLIST,TAB.UPDDATE,TAB.UPDTIME
+			FROM tbl_role_menu TAB
+			<where>
+				<if test="roleid!=null and roleid!='' ">AND TAB.ROLEID = #{roleid}</if>
+				<if test="menuid!=null and menuid!='' ">AND TAB.MENUID = #{menuid}</if>
+				<if test="funclist!=null and funclist!='' ">AND TAB.FUNCLIST = #{funclist}</if>
+				<if test="upddate!=null and upddate!='' ">AND TAB.UPDDATE = #{upddate}</if>
+				<if test="updtime!=null and updtime!='' ">AND TAB.UPDTIME = #{updtime}</if>
+			</where>
+		ORDER BY TAB.ROLEID DESC
+	<![CDATA[
+	) TAB WHERE ROWNUM <= #{pageNo} * #{pageSize}) T WHERE RN > (#{pageNo}-1) * #{pageSize}
+	]]>
+	</select>
+
+	<!-- 按条件查询总数（用于分页） -->
+	<select id="findByEntityOnPageCount" parameterType="TblRoleMenu" resultType="int">
+		SELECT COUNT(1) 
+			FROM tbl_role_menu TAB
+			<where>
+				<if test="roleid!=null and roleid!='' ">AND TAB.ROLEID = #{roleid}</if>
+				<if test="menuid!=null and menuid!='' ">AND TAB.MENUID = #{menuid}</if>
+				<if test="funclist!=null and funclist!='' ">AND TAB.FUNCLIST = #{funclist}</if>
+				<if test="upddate!=null and upddate!='' ">AND TAB.UPDDATE = #{upddate}</if>
+				<if test="updtime!=null and updtime!='' ">AND TAB.UPDTIME = #{updtime}</if>
+			</where>
+	</select>
+
+</mapper>

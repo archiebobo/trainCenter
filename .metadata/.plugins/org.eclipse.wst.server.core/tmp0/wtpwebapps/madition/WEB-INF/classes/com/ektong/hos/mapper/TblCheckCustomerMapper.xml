@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- null -->
+<mapper namespace="com.ektong.hos.mapper.TblCheckCustomerMapper">
+
+<!-- 按ID查询一条 -->
+	<select id="findByStuempno" parameterType="TblCheckCustomer" resultType="TblCheckCustomer">
+		SELECT TAB.CUSTID,TAB.CUSTNAME,TAB.AREA,TAB.UNIT,TAB.MAJO,TAB.ADDR,TAB.STUEMPNO,TAB.STATUS,TAB.IDNO,TAB.SEX,TAB.COUNTRY,TAB.NATION,TAB.EMAIL,TAB.MOBILE,TAB.CSDATE,TAB.IMPDATE,TAB.REMARK
+				FROM TBL_CHECK_CUSTOMER TAB WHERE TAB.STUEMPNO = #{stuempno}
+	</select>
+	
+	<!-- 添加 -->
+	<insert id="insert" parameterType="TblCheckCustomer">
+		INSERT INTO TBL_CHECK_CUSTOMER(CUSTNAME,AREA,UNIT,MAJO,ADDR,STUEMPNO,STATUS,IDNO,SEX,COUNTRY,NATION,EMAIL,MOBILE,CSDATE,IMPDATE,REMARK)
+				VALUES(#{custname},#{area},#{unit},#{majo},#{addr},#{stuempno},#{status},#{idno},#{sex},#{country},#{nation},#{email},#{mobile},#{csdate},#{impdate},#{remark})
+	</insert>
+
+	<!-- 按条件查询多条（不分页） -->
+	<select id="findByEntity" parameterType="TblCheckCustomer" resultType="TblCheckCustomer">
+		SELECT TAB.CUSTID,TAB.CUSTNAME,TAB.AREA,TAB.UNIT,TAB.MAJO,TAB.ADDR,TAB.STUEMPNO,TAB.STATUS,TAB.IDNO,TAB.SEX,TAB.COUNTRY,TAB.NATION,TAB.EMAIL,TAB.MOBILE,TAB.CSDATE,TAB.IMPDATE,TAB.REMARK
+			FROM TBL_CHECK_CUSTOMER TAB
+			<where>
+				<if test="custid!=null and custid!='' ">AND TAB.CUSTID = #{custid}</if>
+				<if test="custname!=null and custname!='' ">AND TAB.CUSTNAME = #{custname}</if>
+				<if test="area!=null and area!='' ">AND TAB.AREA = #{area}</if>
+				<if test="unit!=null and unit!='' ">AND TAB.UNIT = #{unit}</if>
+				<if test="majo!=null and majo!='' ">AND TAB.MAJO = #{majo}</if>
+				<if test="addr!=null and addr!='' ">AND TAB.ADDR = #{addr}</if>
+				<if test="stuempno!=null and stuempno!='' ">AND TAB.STUEMPNO = #{stuempno}</if>
+				<if test="status!=null and status!='' ">AND TAB.STATUS = #{status}</if>
+				<if test="idno!=null and idno!='' ">AND TAB.IDNO = #{idno}</if>
+				<if test="sex!=null and sex!='' ">AND TAB.SEX = #{sex}</if>
+				<if test="country!=null and country!='' ">AND TAB.COUNTRY = #{country}</if>
+				<if test="nation!=null and nation!='' ">AND TAB.NATION = #{nation}</if>
+				<if test="email!=null and email!='' ">AND TAB.EMAIL = #{email}</if>
+				<if test="mobile!=null and mobile!='' ">AND TAB.MOBILE = #{mobile}</if>
+				<if test="csdate!=null and csdate!='' ">AND TAB.CSDATE = #{csdate}</if>
+				<if test="impdate!=null and impdate!='' ">AND TAB.IMPDATE = #{impdate}</if>
+				<if test="remark!=null and remark!='' ">AND TAB.REMARK = #{remark}</if>
+			</where>
+		ORDER BY TAB.CUSTID DESC
+	</select>
+
+	<!-- 按ID查询一条 -->
+	<select id="findById" parameterType="int" resultType="TblCheckCustomer">
+		SELECT TAB.CUSTID,TAB.CUSTNAME,TAB.AREA,TAB.UNIT,TAB.MAJO,TAB.ADDR,TAB.STUEMPNO,TAB.STATUS,TAB.IDNO,TAB.SEX,TAB.COUNTRY,TAB.NATION,TAB.EMAIL,TAB.MOBILE,TAB.CSDATE,TAB.IMPDATE,TAB.REMARK
+				FROM TBL_CHECK_CUSTOMER TAB WHERE TAB.CUSTID = #{custid}
+	</select>
+
+	<!-- 按ID删除一条 -->
+	<delete id="delete" parameterType="int">
+		DELETE FROM TBL_CHECK_CUSTOMER TAB WHERE TAB.CUSTID = #{custid}
+	</delete>
+
+	<!-- 按ID修改 -->
+	<update id="update" parameterType="TblCheckCustomer">
+		UPDATE TAB
+		<set>
+			<if test="custname!=null and custname!='' ">TAB.CUSTNAME = #{custname},</if>
+			<if test="area!=null and area!='' ">TAB.AREA = #{area},</if>
+			<if test="unit!=null and unit!='' ">TAB.UNIT = #{unit},</if>
+			<if test="majo!=null and majo!='' ">TAB.MAJO = #{majo},</if>
+			<if test="addr!=null and addr!='' ">TAB.ADDR = #{addr},</if>
+			<if test="stuempno!=null and stuempno!='' ">TAB.STUEMPNO = #{stuempno},</if>
+			<if test="status!=null and status!='' ">TAB.STATUS = #{status},</if>
+			<if test="idno!=null and idno!='' ">TAB.IDNO = #{idno},</if>
+			<if test="sex!=null and sex!='' ">TAB.SEX = #{sex},</if>
+			<if test="country!=null and country!='' ">TAB.COUNTRY = #{country},</if>
+			<if test="nation!=null and nation!='' ">TAB.NATION = #{nation},</if>
+			<if test="email!=null and email!='' ">TAB.EMAIL = #{email},</if>
+			<if test="mobile!=null and mobile!='' ">TAB.MOBILE = #{mobile},</if>
+			<if test="csdate!=null and csdate!='' ">TAB.CSDATE = #{csdate},</if>
+			<if test="impdate!=null and impdate!='' ">TAB.IMPDATE = #{impdate},</if>
+			<if test="remark!=null and remark!='' ">TAB.REMARK = #{remark},</if>
+		</set>
+		FROM TBL_CHECK_CUSTOMER TAB WHERE TAB.CUSTID = #{custid}
+	</update>
+
+	<!-- 按条件查询多条（分页） -->
+	<select id="findByEntityOnPage" parameterType="TblCheckCustomer" resultType="TblCheckCustomer">
+	<![CDATA[
+	SELECT T.* FROM( SELECT TAB.*,ROWNUM AS RN FROM(
+	]]>
+		SELECT TAB.CUSTID,TAB.CUSTNAME,TAB.AREA,TAB.UNIT,TAB.MAJO,TAB.ADDR,TAB.STUEMPNO,TAB.STATUS,TAB.IDNO,TAB.SEX,TAB.COUNTRY,TAB.NATION,TAB.EMAIL,TAB.MOBILE,TAB.CSDATE,TAB.IMPDATE,TAB.REMARK
+			FROM TBL_CHECK_CUSTOMER TAB
+			<where>
+				<if test="custid!=null and custid!='' ">AND TAB.CUSTID = #{custid}</if>
+				<if test="custname!=null and custname!='' ">AND TAB.CUSTNAME = #{custname}</if>
+				<if test="area!=null and area!='' ">AND TAB.AREA = #{area}</if>
+				<if test="unit!=null and unit!='' ">AND TAB.UNIT = #{unit}</if>
+				<if test="majo!=null and majo!='' ">AND TAB.MAJO = #{majo}</if>
+				<if test="addr!=null and addr!='' ">AND TAB.ADDR = #{addr}</if>
+				<if test="stuempno!=null and stuempno!='' ">AND TAB.STUEMPNO = #{stuempno}</if>
+				<if test="status!=null and status!='' ">AND TAB.STATUS = #{status}</if>
+				<if test="idno!=null and idno!='' ">AND TAB.IDNO = #{idno}</if>
+				<if test="sex!=null and sex!='' ">AND TAB.SEX = #{sex}</if>
+				<if test="country!=null and country!='' ">AND TAB.COUNTRY = #{country}</if>
+				<if test="nation!=null and nation!='' ">AND TAB.NATION = #{nation}</if>
+				<if test="email!=null and email!='' ">AND TAB.EMAIL = #{email}</if>
+				<if test="mobile!=null and mobile!='' ">AND TAB.MOBILE = #{mobile}</if>
+				<if test="csdate!=null and csdate!='' ">AND TAB.CSDATE = #{csdate}</if>
+				<if test="impdate!=null and impdate!='' ">AND TAB.IMPDATE = #{impdate}</if>
+				<if test="remark!=null and remark!='' ">AND TAB.REMARK = #{remark}</if>
+			</where>
+		ORDER BY TAB.CUSTID DESC
+	<![CDATA[
+	) TAB WHERE ROWNUM <= #{pageNo} * #{pageSize}) T WHERE RN > (#{pageNo}-1) * #{pageSize}
+	]]>
+	</select>
+
+	<!-- 按条件查询总数（用于分页） -->
+	<select id="findByEntityOnPageCount" parameterType="TblCheckCustomer" resultType="int">
+		SELECT COUNT(1) 
+			FROM TBL_CHECK_CUSTOMER TAB
+			<where>
+				<if test="custid!=null and custid!='' ">AND TAB.CUSTID = #{custid}</if>
+				<if test="custname!=null and custname!='' ">AND TAB.CUSTNAME = #{custname}</if>
+				<if test="area!=null and area!='' ">AND TAB.AREA = #{area}</if>
+				<if test="unit!=null and unit!='' ">AND TAB.UNIT = #{unit}</if>
+				<if test="majo!=null and majo!='' ">AND TAB.MAJO = #{majo}</if>
+				<if test="addr!=null and addr!='' ">AND TAB.ADDR = #{addr}</if>
+				<if test="stuempno!=null and stuempno!='' ">AND TAB.STUEMPNO = #{stuempno}</if>
+				<if test="status!=null and status!='' ">AND TAB.STATUS = #{status}</if>
+				<if test="idno!=null and idno!='' ">AND TAB.IDNO = #{idno}</if>
+				<if test="sex!=null and sex!='' ">AND TAB.SEX = #{sex}</if>
+				<if test="country!=null and country!='' ">AND TAB.COUNTRY = #{country}</if>
+				<if test="nation!=null and nation!='' ">AND TAB.NATION = #{nation}</if>
+				<if test="email!=null and email!='' ">AND TAB.EMAIL = #{email}</if>
+				<if test="mobile!=null and mobile!='' ">AND TAB.MOBILE = #{mobile}</if>
+				<if test="csdate!=null and csdate!='' ">AND TAB.CSDATE = #{csdate}</if>
+				<if test="impdate!=null and impdate!='' ">AND TAB.IMPDATE = #{impdate}</if>
+				<if test="remark!=null and remark!='' ">AND TAB.REMARK = #{remark}</if>
+			</where>
+	</select>
+
+</mapper>

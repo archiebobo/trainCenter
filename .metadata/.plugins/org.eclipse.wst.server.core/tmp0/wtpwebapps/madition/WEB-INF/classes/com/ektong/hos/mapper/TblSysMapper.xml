@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- null -->
+<mapper namespace="com.ektong.hos.mapper.TblSysMapper">
+
+	<!-- 添加 -->
+	<insert id="insert" parameterType="TblSys">
+		<selectKey resultType="int" order="BEFORE" keyProperty="keyname">
+			SELECT TBL_SYS_SEQ.NEXTVAL FROM DUAL
+		</selectKey>
+		INSERT INTO TBL_SYS(KEYNAME,KEYVALUE,MENO)
+				VALUES(#{keyname},#{keyvalue},#{meno})
+	</insert>
+
+	<!-- 按条件查询多条（不分页） -->
+	<select id="findByEntity" parameterType="TblSys" resultType="TblSys">
+		SELECT TAB.KEYNAME,TAB.KEYVALUE,TAB.MENO
+			FROM TBL_SYS TAB
+			<where>
+				<if test="keyname!=null and keyname!='' ">AND TAB.KEYNAME = #{keyname}</if>
+				<if test="keyvalue!=null and keyvalue!='' ">AND TAB.KEYVALUE = #{keyvalue}</if>
+				<if test="meno!=null and meno!='' ">AND TAB.MENO = #{meno}</if>
+			</where>
+		ORDER BY TAB.KEYNAME DESC
+	</select>
+
+	<!-- 按ID查询一条 -->
+	<select id="findById" parameterType="int" resultType="TblSys">
+		SELECT TAB.KEYNAME,TAB.KEYVALUE,TAB.MENO
+				FROM TBL_SYS TAB WHERE TAB.KEYNAME = #{keyname}
+	</select>
+
+	<!-- 按ID删除一条 -->
+	<delete id="delete" parameterType="int">
+		DELETE FROM TBL_SYS TAB WHERE TAB.KEYNAME = #{keyname}
+	</delete>
+
+	<!-- 按ID修改 -->
+	<update id="update" parameterType="TblSys">
+		UPDATE TBL_SYS TAB
+		<set>
+			<if test="keyvalue!=null and keyvalue!='' ">TAB.KEYVALUE = #{keyvalue},</if>
+			<if test="meno!=null and meno!='' ">TAB.MENO = #{meno},</if>
+		</set>
+		WHERE TAB.KEYNAME = #{keyname}
+	</update>
+
+	<!-- 按条件查询多条（分页） -->
+	<select id="findByEntityOnPage" parameterType="TblSys" resultType="TblSys">
+	<![CDATA[
+	SELECT T.* FROM( SELECT TAB.*,ROWNUM AS RN FROM(
+	]]>
+		SELECT TAB.KEYNAME,TAB.KEYVALUE,TAB.MENO
+			FROM TBL_SYS TAB
+			<where>
+				<if test="keyname!=null and keyname!='' ">AND TAB.KEYNAME = #{keyname}</if>
+				<if test="keyvalue!=null and keyvalue!='' ">AND TAB.KEYVALUE = #{keyvalue}</if>
+				<if test="meno!=null and meno!='' ">AND TAB.MENO = #{meno}</if>
+			</where>
+		ORDER BY TAB.KEYNAME DESC
+	<![CDATA[
+	) TAB WHERE ROWNUM <= #{pageNo} * #{pageSize}) T WHERE RN > (#{pageNo}-1) * #{pageSize}
+	]]>
+	</select>
+
+	<!-- 按条件查询总数（用于分页） -->
+	<select id="findByEntityOnPageCount" parameterType="TblSys" resultType="int">
+		SELECT COUNT(1) 
+			FROM TBL_SYS TAB
+			<where>
+				<if test="keyname!=null and keyname!='' ">AND TAB.KEYNAME = #{keyname}</if>
+				<if test="keyvalue!=null and keyvalue!='' ">AND TAB.KEYVALUE = #{keyvalue}</if>
+				<if test="meno!=null and meno!='' ">AND TAB.MENO = #{meno}</if>
+			</where>
+	</select>
+
+</mapper>

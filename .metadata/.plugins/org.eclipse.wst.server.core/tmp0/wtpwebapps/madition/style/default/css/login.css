@@ -1,0 +1,159 @@
+@charset "utf-8";
+/* CSS Document */
+
+* {
+	margin:0;
+	padding:0;
+}
+html, body {
+	background:#E8E9EB;
+	font-family:Arial, Helvetica, sans-serif;
+	font-size:12px;
+}
+img {
+	border:0;
+}
+
+
+span {
+	color:#f00;
+	display:block;
+	text-align:center;
+	padding-top:10px;
+}
+/*---------用户名密码错误信息提示样式------*/
+
+.loginTopColor {
+	background:#137BD7;
+	border-bottom:1px solid #FFF;
+	height:5px;
+	overflow:hidden;
+}
+/*---------页面顶部蓝色色块样式------*/
+
+.loginBg {
+	background:url(../imgs/login_01.gif) repeat-x;
+	height:237px;
+	width:100%;
+	position:absolute;
+	top:50%;
+	left:0;
+	margin-top:-115px;
+}
+/*---------登录框区域蓝条背景样式------*/
+
+.loginLogo {
+	/*background:url(../imgs/logo.gif) no-repeat;*/
+	width:264px;
+	height:46px;
+	margin:0 auto;
+	color:#1484E6;
+	font-size:14px;
+}
+/*---------logo和项目名称样式------*/
+
+.loginContent {
+	background:url(../imgs/login_02.gif) no-repeat;
+	width:519px;
+	height:165px;
+	padding-top:26px;
+	margin:0 auto;
+	position:relative;
+}
+/*---------登录框白块背景样式------*/
+
+.userBox, .passworkBox {
+	width:235px;
+	height:45px;
+	border:0;
+	line-height:45px;
+	font-size:18px;
+	padding-left:60px;
+	color:#333;
+	margin:0 0 9px 52px;
+}
+	.userBox {
+		background:url(../imgs/userTextbox.gif) no-repeat;
+	}
+	.userBoxMove {
+		background:url(../imgs/userTextbox2.gif) no-repeat;
+	}
+	.userBoxOver {
+		background:url(../imgs/userTextbox3.gif) no-repeat;
+	}
+	.passworkBox {
+		background:url(../imgs/passworkTextbox.gif) no-repeat;
+	}
+	.passworkBoxMove {
+		background:url(../imgs/passworkTextbox2.gif) no-repeat
+	}
+	.passworkBoxOver {
+		background:url(../imgs/passworkTextbox3.gif) no-repeat
+	}
+/*---------用户名密码输入框样式------*/
+
+.loginContent a.loginBtn {
+	background:url(../imgs/loginBtn.gif) no-repeat;
+	width:108px;
+	height:107px;
+	display:block;
+	position:absolute;
+	top:23px;
+	right:50px;
+}
+	.loginContent a.loginBtn:hover {
+		background:url(../imgs/loginBtn2.gif) no-repeat;
+	}
+/*---------登录按钮样式------*/
+
+.otherInput {
+	position:absolute;
+	top:157px;
+	left:0;
+	color:#666;
+	width:100%;
+	text-align:center;
+	height:30px;
+}
+	.otherInput .rmbPass{
+		vertical-align:middle;
+		margin:0 3px 0 30px;
+	}
+	.otherInput .veriCode {
+		width:60px;
+		color:#666;
+		vertical-align:middle;
+	}
+	.otherInput img {
+		vertical-align:middle;
+		margin-left:3px;
+	}
+	.otherInput select {
+		color:#666;
+		vertical-align:middle;
+	}
+/*---------验证码、帐套部分样式------*/
+
+.loginContent a.skin {
+	background:url(../../images/skinIco2.gif) no-repeat;
+	width:23px;
+	height:18px;
+	display:block;
+	position:absolute;
+	right:15px;
+	bottom:12px;
+	
+}
+	.loginContent a.skin:hover{
+		background:url(../../images/skinIco.gif) no-repeat;
+	}
+/*--------切换皮肤样式------*/
+
+.copyright {
+	color:#999;
+	text-align:center;
+	width:100%;
+	position:absolute;
+	bottom:5px;
+}
+/*---------版权申明信息样式------*/

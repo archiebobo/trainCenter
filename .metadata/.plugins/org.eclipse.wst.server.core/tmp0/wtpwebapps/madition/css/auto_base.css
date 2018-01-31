@@ -1,0 +1,182 @@
+html,body{font-family:Arial; font-size: 1em; }
+html, body, ul, li, ol, dl, dd, dt, p, h1, h2, h3, h4, h5, h6, form, fieldset, legend, img,select { margin:0; padding:0; } 
+fieldset, img { border:none; } 
+h1, h2, h3, h4, h5, h6{font-weight: normal;}
+html,body{font-family: "microsoft yahei",Verdana,Arial,Helvetica,sans-serif;}
+.ui-header .ui-title, .ui-footer .ui-title{    
+	font-size: 1.2em;
+	padding-top: 8px;
+	padding-bottom: 8px;
+}
+.ui-input-text input{
+	/*background:#fff none;*/
+	outline: none;
+}
+.ui-select .ui-btn select{
+	border: 1px solid #ccc;
+	opacity: 1;
+	z-index: 0;
+	box-sizing:border-box;
+}
+.ui-page-theme-a a{
+	font-weight: normal;
+}
+img{
+	vertical-align:middle;
+}
+.ui-btn{
+	border: 0;
+}
+.ui-page-theme-a{
+	text-shadow:none;
+}
+.ui-page-theme-a .ui-btn:focus{
+	box-shadow: none;
+}
+.ui-focus{
+	box-shadow: 0px 0px 0px !important;
+}
+.ui-shadow{
+	box-shadow: none !important;
+	-webkit-box-shadow:none !important;
+}
+.ui-shadow-inset{
+	box-shadow: 0px 0px 0px !important;
+}
+
+.ui-content{
+	margin: 0px;
+	padding: 0px;
+	overflow: visible;
+}
+/*搜索框*/
+.ui-input-search{
+	margin-left: 10px;
+	margin-right: 10px;
+}
+.ui-content .ui-listview, .ui-panel-inner > .ui-listview{
+	margin:0px;
+}
+.orange{
+	color: #ff7d13;
+	font-family: Arial,"Lucida Grande",Verdana,"Microsoft YaHei",hei;
+}
+.f_bold{
+	font-weight: bold;
+}
+.blue{
+	color: #099fde;
+}
+
+/*默认页面*/
+.money{
+	color: #f60;
+	font-size: 1.6em !important;
+	font-weight: bold;
+}
+.left{
+	float: left;
+}
+ul{
+	list-style: none !important; 
+}
+a{
+	text-decoration: none !important;
+}
+.ui-listview > .ui-li-static{
+	padding: .7em 10px;
+}
+
+/*账号绑定页面*/
+.auto_login{
+	margin: 0 6px;
+}
+.auto_login > p{
+	line-height: 30px;
+	height: 30px;
+	font-size: .8em;
+
+}
+.auto_login div.auto_msg >div{
+	height: 42px;
+	line-height: 40px;
+	border: 1px solid #eaeaea;
+	margin: 6px 0px;
+}
+.auto_login div.auto_msg div table{
+	width: 100%;
+	padding: 0px 4px;
+	box-sizing:border-box;
+	background: #fff;
+}
+.auto_login div.auto_msg div table th{
+	width: 26%;
+	min-width: 72px;
+	font-size: .95em;
+}
+.auto_login div.auto_msg div table tr td input{
+	width: 100%;
+	border:0px;
+	font-size: .9em;
+}
+
+.auto_login div.auto_msg div.btn{
+	border:0px;
+	margin-top: 10px;
+}
+.auto_login div.auto_msg div.btn input{
+	background: #9DCFF7;
+	width: 100%;
+	height: 40px;
+	border:none;
+	color: #fff;
+}
+.auto_login div.auto_msg p.little_tip{
+	padding: 0px 2px;
+	box-sizing:border-box;
+}
+.auto_login div.auto_msg p.little_tip span{
+	display: block;
+	float: left;
+	width: 33.33%;
+	font-size: .78em;
+}
+
+
+/*九宫格页面*/
+.jiugongge_cata{
+	/*margin: 1em 0px;*/
+}
+.jiugongge_cata ul{
+	overflow: hidden;
+	margin-bottom: 1em;
+}
+.jiugongge_cata ul li{
+	float: left;
+	text-align: center;
+	width: 33.333333%;
+	/*background: #fff;*/
+	padding: 1em 0px;
+	border-right: 1px solid #eaeaea;
+	border-bottom: 1px solid #eaeaea;
+	box-sizing:border-box;
+}
+.jiugongge_cata ul li:nth-child(3n){
+	border-right:0px;
+}
+.jiugongge_cata ul li a{
+	display: block;
+	width: 100%;
+	text-decoration: none;
+	color: #333;
+	font-size: .8em;
+	font-weight: bold;
+}
+.jiugongge_cata ul li a b{
+	display: block;
+	width: 50px;
+	height: 50px;
+	margin: 10px auto;
+	background: #e5e5e5;
+
+}

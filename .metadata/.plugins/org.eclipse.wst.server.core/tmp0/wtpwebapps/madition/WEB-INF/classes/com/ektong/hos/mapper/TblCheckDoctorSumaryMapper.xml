@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- null -->
+<mapper namespace="com.ektong.hos.mapper.TblCheckDoctorSumaryMapper">
+
+	<!-- 添加 -->
+	<insert id="insert" parameterType="TblCheckDoctorSumary">
+		INSERT INTO TBL_CHECK_DOCTOR_SUMARY(SUMMARYNAME,STATUS,MEMO,REMARK)
+				VALUES(#{summaryname},#{status},#{memo},#{remark})
+	</insert>
+
+	<!-- 按条件查询多条（不分页） -->
+	<select id="findByEntity" parameterType="TblCheckDoctorSumary" resultType="TblCheckDoctorSumary">
+		SELECT TAB.DCSUMMARYID,TAB.SUMMARYNAME,TAB.STATUS,TAB.MEMO,TAB.REMARK
+			FROM TBL_CHECK_DOCTOR_SUMARY TAB
+			<where>
+				<if test="dcsummaryid!=null and dcsummaryid!='' ">AND TAB.DCSUMMARYID = #{dcsummaryid}</if>
+				<if test="summaryname!=null and summaryname!='' ">AND TAB.SUMMARYNAME = #{summaryname}</if>
+				<if test="status!=null and status!='' ">AND TAB.STATUS = #{status}</if>
+				<if test="memo!=null and memo!='' ">AND TAB.MEMO = #{memo}</if>
+				<if test="remark!=null and remark!='' ">AND TAB.REMARK = #{remark}</if>
+			</where>
+		ORDER BY TAB.DCSUMMARYID DESC
+	</select>
+
+	<!-- 按ID查询一条 -->
+	<select id="findById" parameterType="int" resultType="TblCheckDoctorSumary">
+		SELECT TAB.DCSUMMARYID,TAB.SUMMARYNAME,TAB.STATUS,TAB.MEMO,TAB.REMARK
+				FROM TBL_CHECK_DOCTOR_SUMARY TAB WHERE TAB.DCSUMMARYID = #{dcsummaryid}
+	</select>
+
+	<!-- 按ID删除一条 -->
+	<delete id="delete" parameterType="int">
+		DELETE TAB FROM TBL_CHECK_DOCTOR_SUMARY TAB WHERE TAB.DCSUMMARYID = #{dcsummaryid}
+	</delete>
+
+	<!-- 按ID修改 -->
+	<update id="update" parameterType="TblCheckDoctorSumary">
+		UPDATE TAB
+		<set>
+			<if test="summaryname!=null and summaryname!='' ">TAB.SUMMARYNAME = #{summaryname},</if>
+			<if test="status!=null and status!='' ">TAB.STATUS = #{status},</if>
+			<if test="memo!=null and memo!='' ">TAB.MEMO = #{memo},</if>
+			<if test="remark!=null and remark!='' ">TAB.REMARK = #{remark},</if>
+		</set>
+		FROM TBL_CHECK_DOCTOR_SUMARY TAB WHERE TAB.DCSUMMARYID = #{dcsummaryid}
+	</update>
+
+	<!-- 按条件查询多条（分页） -->
+	<select id="findByEntityOnPage" parameterType="TblCheckDoctorSumary" resultType="TblCheckDoctorSumary">
+		SELECT TAB.DCSUMMARYID,TAB.SUMMARYNAME,TAB.STATUS,TAB.MEMO,TAB.REMARK
+			FROM TBL_CHECK_DOCTOR_SUMARY TAB
+			<where>
+				<if test="dcsummaryid!=null and dcsummaryid!='' ">AND TAB.DCSUMMARYID = #{dcsummaryid}</if>
+				<if test="summaryname!=null and summaryname!='' ">AND TAB.SUMMARYNAME = #{summaryname}</if>
+				<if test="status!=null and status!='' ">AND TAB.STATUS = #{status}</if>
+				<if test="memo!=null and memo!='' ">AND TAB.MEMO = #{memo}</if>
+				<if test="remark!=null and remark!='' ">AND TAB.REMARK = #{remark}</if>
+				AND TAB.DCSUMMARYID between (#{pageNo}-1) * #{pageSize} and  #{pageNo} * #{pageSize}
+			</where>
+		ORDER BY TAB.DCSUMMARYID DESC
+	</select>
+
+	<!-- 按条件查询总数（用于分页） -->
+	<select id="findByEntityOnPageCount" parameterType="TblCheckDoctorSumary" resultType="int">
+		SELECT COUNT(1) 
+			FROM TBL_CHECK_DOCTOR_SUMARY TAB
+			<where>
+				<if test="dcsummaryid!=null and dcsummaryid!='' ">AND TAB.DCSUMMARYID = #{dcsummaryid}</if>
+				<if test="summaryname!=null and summaryname!='' ">AND TAB.SUMMARYNAME = #{summaryname}</if>
+				<if test="status!=null and status!='' ">AND TAB.STATUS = #{status}</if>
+				<if test="memo!=null and memo!='' ">AND TAB.MEMO = #{memo}</if>
+				<if test="remark!=null and remark!='' ">AND TAB.REMARK = #{remark}</if>
+			</where>
+	</select>
+
+</mapper>

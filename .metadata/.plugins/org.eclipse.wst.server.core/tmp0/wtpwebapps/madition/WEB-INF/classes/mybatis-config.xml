@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration
+ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+    <settings>
+        <setting name="cacheEnabled" value="false"/>
+        <setting name="useGeneratedKeys" value="true"/>
+        <setting name="defaultExecutorType" value="REUSE"/>
+        <setting name="lazyLoadingEnabled" value="true"/>
+    </settings>
+    
+    <!-- 配置别名 -->
+    <typeAliases>
+		
+		<typeAlias alias="TblCheckBatchset" type="com.ektong.hos.domain.TblCheckBatchset"/>
+
+		<typeAlias alias="TblCheckCustomer" type="com.ektong.hos.domain.TblCheckCustomer"/>
+
+		<typeAlias alias="TblCheckDoctorSumary" type="com.ektong.hos.domain.TblCheckDoctorSumary"/>
+
+		<typeAlias alias="TblCheckInputokDtl" type="com.ektong.hos.domain.TblCheckInputokDtl"/>
+
+		<typeAlias alias="TblCheckInputokInfo" type="com.ektong.hos.domain.TblCheckInputokInfo"/>
+
+		<typeAlias alias="TblCheckInputDtl" type="com.ektong.hos.domain.TblCheckInputDtl"/>
+
+		<typeAlias alias="TblCheckInputInfo" type="com.ektong.hos.domain.TblCheckInputInfo"/>
+
+		<typeAlias alias="TblCheckProj" type="com.ektong.hos.domain.TblCheckProj"/>
+
+		<typeAlias alias="TblCheckProjbatch" type="com.ektong.hos.domain.TblCheckProjbatch"/>
+
+		<typeAlias alias="TblMenu" type="com.ektong.hos.domain.TblMenu"/>
+
+		<typeAlias alias="TblOper" type="com.ektong.hos.domain.TblOper"/>
+
+		<typeAlias alias="TblSys" type="com.ektong.hos.domain.TblSys"/>
+		
+		<typeAlias alias="TblRole" type="com.ektong.hos.domain.TblRole"/>
+		
+		<typeAlias alias="TblRoleMenu" type="com.ektong.hos.domain.TblRoleMenu"/>
+		
+    </typeAliases>
+</configuration>

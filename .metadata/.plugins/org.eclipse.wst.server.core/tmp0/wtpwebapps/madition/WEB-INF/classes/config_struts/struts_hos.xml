@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC   
+"-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"   
+"http://struts.apache.org/dtds/struts-2.0.dtd">
+<struts>
+	<package name="hos" namespace="/hos" extends="global">
+		<!-- test -->
+		<action name="tblCheckBatchset_*" class="com.ektong.hos.web.TblCheckBatchsetAction" method="{1}">
+		<result name="tblCheckBatchset-list">/manager/manager-tblCheckBatchset/tblCheckBatchset-list.jsp</result>
+		</action>
+		<!-- test -->
+		<action name="tblCheckCustomer_*" class="com.ektong.hos.web.TblCheckCustomerAction" method="{1}">
+		<result name="tblCheckCustomer-list">/manager/manager-tblCheckCustomer/tblCheckCustomer-list.jsp</result>
+		</action>
+		<!-- test -->
+		<action name="tblCheckDoctorSumary_*" class="com.ektong.hos.web.TblCheckDoctorSumaryAction" method="{1}">
+			<result name="tblCheckDoctorSumary-list">/manager/manager-tblCheckDoctorSumary/tblCheckDoctorSumary-list.jsp</result>
+		</action>
+		<!-- test -->
+		<action name="tblCheckInputDtl_*" class="com.ektong.hos.web.TblCheckInputDtlAction" method="{1}">
+		</action>
+		<!-- test -->
+		<action name="tblCheckInputInfo_*" class="com.ektong.hos.web.TblCheckInputInfoAction" method="{1}">
+		<result name="tblCheckInputDtl-list">/manager/manager-tblCheckInputDtl/tblCheckInputDtl-list.jsp</result>
+		<result name="tblCheckInputDtl-updatelist">/manager/manager-tblCheckInputDtl/tblCheckInputDtl-updatelist.jsp</result>
+		</action>
+		<!-- test -->
+		<action name="tblCheckInputokDtl_*" class="com.ektong.hos.web.TblCheckInputokDtlAction" method="{1}">
+		</action>
+		<!-- test -->
+		<action name="tblCheckInputokInfo_*" class="com.ektong.hos.web.TblCheckInputokInfoAction" method="{1}">
+		<result name="tblCheckInputokInfo-list">/manager/manager-tblCheckInputokInfo/tblCheckInputokInfo-list.jsp</result>
+		
+		</action>
+		<!-- test -->
+		<action name="tblCheckProj_*" class="com.ektong.hos.web.TblCheckProjAction" method="{1}">
+		</action>
+		<!-- test -->
+		<action name="tblCheckProjbatch_*" class="com.ektong.hos.web.TblCheckProjbatchAction" method="{1}">
+		</action>
+		<!-- test -->
+		<action name="tblMenu_*" class="com.ektong.hos.web.TblMenuAction" method="{1}">
+		</action>
+		<!-- test -->
+		<action name="tblOper_*" class="com.ektong.hos.web.TblOperAction" method="{1}">
+		<result name="tblOper-list">/manager/manager-opertor/tOperator-list.jsp</result>
+		</action>
+		<!-- test -->
+		<action name="tblSys_*" class="com.ektong.hos.web.TblSysAction" method="{1}">
+		</action>
+		<!-- test -->
+		<action name="tblRole_*" class="com.ektong.hos.web.TblRoleAction" method="{1}">
+		<result name="tblRole-list">/manager/manager-role/tblRole-list.jsp</result>
+		</action>
+		<!-- test -->
+		<action name="tblRoleMenu_*" class="com.ektong.hos.web.TblRoleMenuAction" method="{1}">
+		</action>
+    </package>
+</struts>
